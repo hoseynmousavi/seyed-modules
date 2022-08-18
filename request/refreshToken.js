@@ -1,20 +1,18 @@
-import AuthActions from "../context/auth/AuthActions"
-import toastConstant from "../constant/toastConstant"
-import {FAIL_TOAST} from "../constant/toastTypes"
+import {FAIL_TOAST, tokenExpired} from "../constant/toastTypes"
 import refreshTokenManager from "./refreshTokenManager"
 import toastManager from "../helpers/toastManager"
 import logoutManager from "../helpers/logoutManager"
 
 let isRefreshing = false
 
-function refreshToken()
+function refreshToken({getTokenWithRefreshToken})
 {
     return new Promise((resolve, reject) =>
     {
         if (!isRefreshing)
         {
             isRefreshing = true
-            AuthActions.getTokenWithRefreshToken()
+            getTokenWithRefreshToken()
                 .then(status =>
                 {
                     if (status)
@@ -26,7 +24,7 @@ function refreshToken()
                     else
                     {
                         isRefreshing = false
-                        toastManager.addToast({message: toastConstant.tokenExpired, type: FAIL_TOAST})
+                        toastManager.addToast({message: tokenExpired, type: FAIL_TOAST})
                         logoutManager.logout({sendLogoutReq: false})
                         refreshTokenManager.refreshToken({message: "NOK"})
                         reject()
@@ -41,7 +39,7 @@ function refreshToken()
                 if (message === "OK") resolve()
                 else
                 {
-                    toastManager.addToast({message: toastConstant.tokenExpired, type: FAIL_TOAST})
+                    toastManager.addToast({message: tokenExpired, type: FAIL_TOAST})
                     logoutManager.logout({sendLogoutReq: false})
                     reject()
                 }

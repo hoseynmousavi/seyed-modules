@@ -1,5 +1,5 @@
 import {useEffect} from "react"
-import toastConstant from "../constant/toastConstant"
+import {REQUEST_CANCEL} from "../constant/toastTypes"
 
 function GetData({request, isLoading, cancelToken, doAfterGet, dependencies = []})
 {
@@ -7,7 +7,7 @@ function GetData({request, isLoading, cancelToken, doAfterGet, dependencies = []
     {
         function sendRequest()
         {
-            cancelToken?.current?.cancel?.(toastConstant.requestCancel)
+            cancelToken?.current?.cancel?.(REQUEST_CANCEL)
             request()?.then?.(() => doAfterGet && setTimeout(doAfterGet, 10))
         }
 
@@ -19,7 +19,7 @@ function GetData({request, isLoading, cancelToken, doAfterGet, dependencies = []
         return () =>
         {
             // eslint-disable-next-line
-            cancelToken?.current?.cancel?.(toastConstant.requestCancel)
+            cancelToken?.current?.cancel?.(REQUEST_CANCEL)
             window.removeEventListener("online", sendRequest)
         }
         // eslint-disable-next-line

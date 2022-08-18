@@ -3,10 +3,14 @@ import urlMaker from "./urlMaker"
 import errorHandler from "./errorHandler"
 import requestDataShareManager from "./requestDataShareManager"
 import cookieHelper from "../helpers/cookieHelper"
-import refreshToken from "./refreshToken"
 
 let onGoingReqs = {}
-let refreshToken
+let getTokenWithRefreshToken
+
+function initRefresh(refreshFunc)
+{
+    getTokenWithRefreshToken = refreshFunc
+}
 
 function handleRepeat({reqUrl})
 {
@@ -71,9 +75,9 @@ function get({base, url, param = "", dontToast, dontCache, cancel, useRefreshTok
                         delete onGoingReqs[reqUrl]
                         return output
                     }
-                    else return errorHandler({refreshToken, dontToast, err, onGoingReqs, reqUrl, callback: () => get(arguments[0])})
+                    else return errorHandler({getTokenWithRefreshToken, dontToast, err, onGoingReqs, reqUrl, callback: () => get(arguments[0])})
                 }
-                else return errorHandler({refreshToken, dontToast, err, onGoingReqs, reqUrl, callback: () => get(arguments[0])})
+                else return errorHandler({getTokenWithRefreshToken, dontToast, err, onGoingReqs, reqUrl, callback: () => get(arguments[0])})
             })
     }
 }
@@ -109,7 +113,7 @@ function post({base, url, data, param = "", progress, cancel, dontToast, useRefr
                 delete onGoingReqs[reqUrl]
                 return output
             })
-            .catch(err => errorHandler({refreshToken, dontToast, err, onGoingReqs, reqUrl, callback: () => post(arguments[0])}))
+            .catch(err => errorHandler({getTokenWithRefreshToken, dontToast, err, onGoingReqs, reqUrl, callback: () => post(arguments[0])}))
     }
 }
 
@@ -126,7 +130,7 @@ function put({base, url, data, param = "", progress, dontToast})
         },
     )
         .then(res => res.data)
-        .catch(err => errorHandler({refreshToken, dontToast, err, reqUrl, callback: () => put(arguments[0])}))
+        .catch(err => errorHandler({getTokenWithRefreshToken, dontToast, err, reqUrl, callback: () => put(arguments[0])}))
 }
 
 function patch({base, url, data, param = "", progress, dontToast})
@@ -142,7 +146,7 @@ function patch({base, url, data, param = "", progress, dontToast})
         },
     )
         .then(res => res.data)
-        .catch(err => errorHandler({refreshToken, dontToast, err, reqUrl, callback: () => patch(arguments[0])}))
+        .catch(err => errorHandler({getTokenWithRefreshToken, dontToast, err, reqUrl, callback: () => patch(arguments[0])}))
 }
 
 function del({base, url, data, param = "", dontToast})
@@ -157,13 +161,11 @@ function del({base, url, data, param = "", dontToast})
         },
     )
         .then(res => res.data)
-        .catch(err => errorHandler({refreshToken, dontToast, err, reqUrl, callback: () => del(arguments[0])}))
+        .catch(err => errorHandler({getTokenWithRefreshToken, dontToast, err, reqUrl, callback: () => del(arguments[0])}))
 }
 
-function Request(getTokenWithRefreshToken)
-{
-    if (getTokenWithRefreshToken) refreshToken = getTokenWithRefreshToken
-    return {get, post, put, patch, del}
+const request = {
+    initRefresh, get, post, put, patch, del,
 }
 
-export default new Request
+export default request

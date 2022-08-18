@@ -5,12 +5,12 @@ import refreshToken from "./refreshToken"
 import requestDataShareManager from "./requestDataShareManager"
 import offlineSending from "../constant/offlineSending"
 
-function errorHandler({refreshToken, useRefreshToken, dontToast, err, onGoingReqs, reqUrl, callback})
+function errorHandler({getTokenWithRefreshToken, useRefreshToken, dontToast, err, onGoingReqs, reqUrl, callback})
 {
     console.log(" %cERROR ", "color: orange; font-size:12px; font-family: 'Helvetica',consolas,sans-serif; font-weight:900;", err.response)
     if (!useRefreshToken && err?.response?.status === 403 && err?.response?.data?.detail === "Forbidden")
     {
-        return refreshToken()
+        return refreshToken({getTokenWithRefreshToken})
             .then(() =>
             {
                 delete onGoingReqs?.[reqUrl]

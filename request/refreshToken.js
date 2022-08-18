@@ -5,14 +5,14 @@ import logoutManager from "../helpers/logoutManager"
 
 let isRefreshing = false
 
-function rejected({reject})
+function rejected({reject, redirectUrl})
 {
     toastManager.addToast({message: tokenExpired, type: FAIL_TOAST})
-    logoutManager.logout()
+    logoutManager.logout({redirectUrl})
     reject()
 }
 
-function refreshToken({getTokenWithRefreshToken})
+function refreshToken({getTokenWithRefreshToken, redirectUrl})
 {
     return new Promise((resolve, reject) =>
     {
@@ -34,7 +34,7 @@ function refreshToken({getTokenWithRefreshToken})
                         {
                             isRefreshing = false
                             refreshTokenManager.refreshToken({message: "NOK"})
-                            rejected({reject})
+                            rejected({reject, redirectUrl})
                         }
                     })
             }
@@ -44,14 +44,14 @@ function refreshToken({getTokenWithRefreshToken})
                 {
                     const {message} = event.detail
                     if (message === "OK") resolve()
-                    else rejected({reject})
+                    else rejected({reject, redirectUrl})
                     window.removeEventListener("refreshToken", onRefreshEvent)
                 }
 
                 window.addEventListener("refreshToken", onRefreshEvent, {passive: true})
             }
         }
-        else rejected({reject})
+        else rejected({reject, redirectUrl})
     })
 }
 

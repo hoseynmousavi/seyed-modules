@@ -8,12 +8,14 @@ let onGoingReqs = {}
 let getTokenWithRefreshToken
 let makeBaseOnEnv = base => base
 let offlineSending = []
+let redirectUrl = "/login"
 
-function init({refreshFunc, makeBaseOnEnvFunc, offlineSendingArr})
+function init({refreshFunc, makeBaseOnEnvFunc, offlineSendingArr, redirectUrlLogout})
 {
     getTokenWithRefreshToken = refreshFunc
     makeBaseOnEnv = makeBaseOnEnvFunc
     offlineSending = offlineSendingArr
+    redirectUrl = redirectUrlLogout
 }
 
 function handleRepeat({reqUrl})
@@ -79,9 +81,9 @@ function get({base, url, param = "", dontToast, dontCache, cancel, useRefreshTok
                         delete onGoingReqs[reqUrl]
                         return output
                     }
-                    else return errorHandler({offlineSending, getTokenWithRefreshToken, dontToast, err, onGoingReqs, reqUrl, callback: () => get(arguments[0])})
+                    else return error({dontToast, err, onGoingReqs, reqUrl, callback: () => get(arguments[0])})
                 }
-                else return errorHandler({offlineSending, getTokenWithRefreshToken, dontToast, err, onGoingReqs, reqUrl, callback: () => get(arguments[0])})
+                else return error({dontToast, err, onGoingReqs, reqUrl, callback: () => get(arguments[0])})
             })
     }
 }
@@ -117,7 +119,7 @@ function post({base, url, data, param = "", progress, cancel, dontToast, useRefr
                 delete onGoingReqs[reqUrl]
                 return output
             })
-            .catch(err => errorHandler({offlineSending, getTokenWithRefreshToken, dontToast, err, onGoingReqs, reqUrl, callback: () => post(arguments[0])}))
+            .catch(err => error({dontToast, err, onGoingReqs, reqUrl, callback: () => post(arguments[0])}))
     }
 }
 
@@ -134,7 +136,7 @@ function put({base, url, data, param = "", progress, dontToast})
         },
     )
         .then(res => res.data)
-        .catch(err => errorHandler({offlineSending, getTokenWithRefreshToken, dontToast, err, reqUrl, callback: () => put(arguments[0])}))
+        .catch(err => error({dontToast, err, reqUrl, callback: () => put(arguments[0])}))
 }
 
 function patch({base, url, data, param = "", progress, dontToast})
@@ -150,7 +152,7 @@ function patch({base, url, data, param = "", progress, dontToast})
         },
     )
         .then(res => res.data)
-        .catch(err => errorHandler({offlineSending, getTokenWithRefreshToken, dontToast, err, reqUrl, callback: () => patch(arguments[0])}))
+        .catch(err => error({dontToast, err, reqUrl, callback: () => patch(arguments[0])}))
 }
 
 function del({base, url, data, param = "", dontToast})
@@ -165,7 +167,7 @@ function del({base, url, data, param = "", dontToast})
         },
     )
         .then(res => res.data)
-        .catch(err => errorHandler({offlineSending, getTokenWithRefreshToken, dontToast, err, reqUrl, callback: () => del(arguments[0])}))
+        .catch(err => error({dontToast, err, reqUrl, callback: () => del(arguments[0])}))
 }
 
 function sendFile({base, url, param, data, progress, dontToast})
@@ -185,7 +187,20 @@ function sendFile({base, url, param, data, progress, dontToast})
             progress?.(100)
             return res.data
         })
-        .catch(err => errorHandler({offlineSending, getTokenWithRefreshToken, dontToast, err, reqUrl, callback: () => put(arguments[0])}))
+        .catch(err => error({dontToast, err, reqUrl, callback: () => put(arguments[0])}))
+}
+
+function error({dontToast, err, reqUrl, callback})
+{
+    return errorHandler({
+        redirectUrl,
+        offlineSending,
+        getTokenWithRefreshToken,
+        dontToast,
+        err,
+        reqUrl,
+        callback,
+    })
 }
 
 const request = {

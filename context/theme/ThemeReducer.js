@@ -34,7 +34,7 @@ function reducer(state, action)
     }
 }
 
-function ThemeProvider({children})
+function ThemeProvider({children, changeVariables})
 {
     const [state, dispatch] = useReducer(reducer, initialState, init)
 
@@ -51,8 +51,8 @@ function ThemeProvider({children})
         function setTheme({isInitial})
         {
             const theme = cookieHelper.getItem("theme")
-            if (theme === "dark" || (!theme && defaultDark?.matches)) ThemeActions.changeTheme({theme: "dark", save: false, dispatch})
-            else if (!isInitial && !theme) ThemeActions.changeTheme({theme: defaultDark?.matches, save: false, dispatch})
+            if (theme === "dark" || (!theme && defaultDark?.matches)) ThemeActions.changeTheme({theme: "dark", save: false, changeVariables, dispatch})
+            else if (!isInitial && !theme) ThemeActions.changeTheme({theme: defaultDark?.matches, save: false, changeVariables, dispatch})
         }
     }, [])
 

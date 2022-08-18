@@ -5,49 +5,53 @@ import logoutManager from "../helpers/logoutManager"
 
 let isRefreshing = false
 
+function rejected({reject})
+{
+    toastManager.addToast({message: tokenExpired, type: FAIL_TOAST})
+    logoutManager.logout()
+    reject()
+}
+
 function refreshToken({getTokenWithRefreshToken})
 {
     return new Promise((resolve, reject) =>
     {
-        if (!isRefreshing)
+        if (getTokenWithRefreshToken)
         {
-            isRefreshing = true
-            getTokenWithRefreshToken()
-                .then(status =>
-                {
-                    if (status)
-                    {
-                        isRefreshing = false
-                        refreshTokenManager.refreshToken({message: "OK"})
-                        resolve()
-                    }
-                    else
-                    {
-                        isRefreshing = false
-                        toastManager.addToast({message: tokenExpired, type: FAIL_TOAST})
-                        logoutManager.logout({sendLogoutReq: false})
-                        refreshTokenManager.refreshToken({message: "NOK"})
-                        reject()
-                    }
-                })
-        }
-        else
-        {
-            function onRefreshEvent(event)
+            if (!isRefreshing)
             {
-                const {message} = event.detail
-                if (message === "OK") resolve()
-                else
-                {
-                    toastManager.addToast({message: tokenExpired, type: FAIL_TOAST})
-                    logoutManager.logout({sendLogoutReq: false})
-                    reject()
-                }
-                window.removeEventListener("refreshToken", onRefreshEvent)
+                isRefreshing = true
+                getTokenWithRefreshToken()
+                    .then(status =>
+                    {
+                        if (status)
+                        {
+                            isRefreshing = false
+                            refreshTokenManager.refreshToken({message: "OK"})
+                            resolve()
+                        }
+                        else
+                        {
+                            isRefreshing = false
+                            refreshTokenManager.refreshToken({message: "NOK"})
+                            rejected({reject})
+                        }
+                    })
             }
+            else
+            {
+                function onRefreshEvent(event)
+                {
+                    const {message} = event.detail
+                    if (message === "OK") resolve()
+                    else rejected({reject})
+                    window.removeEventListener("refreshToken", onRefreshEvent)
+                }
 
-            window.addEventListener("refreshToken", onRefreshEvent, {passive: true})
+                window.addEventListener("refreshToken", onRefreshEvent, {passive: true})
+            }
         }
+        else rejected({reject})
     })
 }
 

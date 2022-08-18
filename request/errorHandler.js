@@ -3,9 +3,8 @@ import errorConstant from "../constant/errorConstant"
 import {FAIL_TOAST, INFO_TOAST, REQUEST_CANCEL, REQUEST_QUE} from "../constant/toastTypes"
 import refreshToken from "./refreshToken"
 import requestDataShareManager from "./requestDataShareManager"
-import offlineSending from "../constant/offlineSending"
 
-function errorHandler({getTokenWithRefreshToken, useRefreshToken, dontToast, err, onGoingReqs, reqUrl, callback})
+function errorHandler({offlineSending, getTokenWithRefreshToken, useRefreshToken, dontToast, err, onGoingReqs, reqUrl, callback})
 {
     console.log(" %cERROR ", "color: orange; font-size:12px; font-family: 'Helvetica',consolas,sans-serif; font-weight:900;", err.response)
     if (!useRefreshToken && err?.response?.status === 403 && err?.response?.data?.detail === "Forbidden")

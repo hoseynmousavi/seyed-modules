@@ -54,6 +54,7 @@ function ThemeProvider({children, changeVariables})
             if (theme === "dark" || (!theme && defaultDark?.matches)) ThemeActions.changeTheme({theme: "dark", save: false, changeVariables, dispatch})
             else if (!isInitial && !theme) ThemeActions.changeTheme({theme: defaultDark?.matches, save: false, changeVariables, dispatch})
         }
+        // eslint-disable-next-line
     }, [])
 
     return (

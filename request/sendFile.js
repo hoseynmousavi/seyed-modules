@@ -1,14 +1,15 @@
 import axios from "axios"
 import urlMaker from "./urlMaker"
 import errorHandler from "./errorHandler"
+import cookieHelper from "../helpers/cookieHelper"
 
-function sendFile({dontToast, url, data, progress})
+function sendFile({base, url, param, data, progress, dontToast})
 {
-    const token = localStorage.getItem("token")
+    const token = cookieHelper.getItem("token")
     return axios(
         {
             method: "put",
-            url: urlMaker({url}),
+            url: urlMaker({base, url, param}),
             headers: {"Authorization": token},
             onUploadProgress: p => progress && progress(Math.floor((p.loaded * 99) / p.total)),
             data,

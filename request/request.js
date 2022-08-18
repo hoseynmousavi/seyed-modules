@@ -2,6 +2,7 @@ import axios from "axios"
 import urlMaker from "./urlMaker"
 import errorHandler from "./errorHandler"
 import requestDataShareManager from "./requestDataShareManager"
+import cookieHelper from "../helpers/cookieHelper"
 
 let onGoingReqs = {}
 
@@ -26,14 +27,14 @@ function handleRepeat({reqUrl})
     })
 }
 
-function get({url, param = "", dontToast, dontCache, cancel, useRefreshToken})
+function get({base, url, param = "", dontToast, dontCache, cancel, useRefreshToken})
 {
-    const reqUrl = urlMaker({url, param})
+    const reqUrl = urlMaker({base, url, param})
     if (onGoingReqs[reqUrl]) return handleRepeat({reqUrl})
     else
     {
         onGoingReqs[reqUrl] = {count: 1}
-        const token = useRefreshToken ? localStorage.getItem("refreshToken") : localStorage.getItem("token")
+        const token = cookieHelper.getItem(useRefreshToken ? "refreshToken" : "token")
         let source
         if (cancel)
         {
@@ -75,14 +76,14 @@ function get({url, param = "", dontToast, dontCache, cancel, useRefreshToken})
     }
 }
 
-function post({url, data, param = "", progress, cache, cancel, dontToast, useRefreshToken})
+function post({base, url, data, param = "", progress, cancel, dontToast, useRefreshToken})
 {
-    const reqUrl = urlMaker({url, param})
+    const reqUrl = urlMaker({base, url, param})
     if (onGoingReqs[reqUrl]) return handleRepeat({reqUrl})
     else
     {
         onGoingReqs[reqUrl] = {count: 1}
-        const token = useRefreshToken ? localStorage.getItem("refreshToken") : localStorage.getItem("token")
+        const token = cookieHelper.getItem(useRefreshToken ? "refreshToken" : "token")
         let source
         if (cancel)
         {
@@ -104,32 +105,16 @@ function post({url, data, param = "", progress, cache, cancel, dontToast, useRef
                 const output = res.data
                 if (onGoingReqs[reqUrl].count > 1) requestDataShareManager.dataShare({message: {status: "OK", dataReqUrl: reqUrl, data: output}})
                 delete onGoingReqs[reqUrl]
-                if (cache) localStorage.setItem(reqUrl, JSON.stringify(output))
                 return output
             })
-            .catch(err =>
-            {
-                if (err.message === "Network Error" && cache)
-                {
-                    const cacheData = localStorage.getItem(reqUrl)
-                    if (cacheData)
-                    {
-                        const output = JSON.parse(cacheData)
-                        if (onGoingReqs[reqUrl].count > 1) requestDataShareManager.dataShare({message: {status: "OK", dataReqUrl: reqUrl, data: output}})
-                        delete onGoingReqs[reqUrl]
-                        return output
-                    }
-                    else return errorHandler({dontToast, err, onGoingReqs, reqUrl, callback: () => post(arguments[0])})
-                }
-                else return errorHandler({dontToast, err, onGoingReqs, reqUrl, callback: () => post(arguments[0])})
-            })
+            .catch(err => errorHandler({dontToast, err, onGoingReqs, reqUrl, callback: () => post(arguments[0])}))
     }
 }
 
-function put({url, data, param = "", progress, dontToast})
+function put({base, url, data, param = "", progress, dontToast})
 {
-    const reqUrl = urlMaker({url, param})
-    const token = localStorage.getItem("token")
+    const reqUrl = urlMaker({base, url, param})
+    const token = cookieHelper.getItem("token")
     return axios.put(
         reqUrl,
         data,
@@ -142,10 +127,10 @@ function put({url, data, param = "", progress, dontToast})
         .catch(err => errorHandler({dontToast, err, reqUrl, callback: () => put(arguments[0])}))
 }
 
-function patch({url, data, param = "", progress, dontToast})
+function patch({base, url, data, param = "", progress, dontToast})
 {
-    const reqUrl = urlMaker({url, param})
-    const token = localStorage.getItem("token")
+    const reqUrl = urlMaker({base, url, param})
+    const token = cookieHelper.getItem("token")
     return axios.patch(
         reqUrl,
         data,
@@ -158,10 +143,10 @@ function patch({url, data, param = "", progress, dontToast})
         .catch(err => errorHandler({dontToast, err, reqUrl, callback: () => patch(arguments[0])}))
 }
 
-function del({url, data, param = "", dontToast})
+function del({base, url, data, param = "", dontToast})
 {
-    const reqUrl = urlMaker({url, param})
-    const token = localStorage.getItem("token")
+    const reqUrl = urlMaker({base, url, param})
+    const token = cookieHelper.getItem("token")
     return axios.delete(
         reqUrl,
         {

@@ -6,10 +6,12 @@ import cookieHelper from "../helpers/cookieHelper"
 
 let onGoingReqs = {}
 let getTokenWithRefreshToken
+let makeBaseOnEnv
 
-function initRefresh(refreshFunc)
+function initRefreshAndBaseEnvMaker({refreshFunc, baseEnvFunc})
 {
     getTokenWithRefreshToken = refreshFunc
+    makeBaseOnEnv = baseEnvFunc
 }
 
 function handleRepeat({reqUrl})
@@ -35,7 +37,7 @@ function handleRepeat({reqUrl})
 
 function get({base, url, param = "", dontToast, dontCache, cancel, useRefreshToken})
 {
-    const reqUrl = urlMaker({base, url, param})
+    const reqUrl = urlMaker({makeBaseOnEnv, base, url, param})
     if (onGoingReqs[reqUrl]) return handleRepeat({reqUrl})
     else
     {
@@ -84,7 +86,7 @@ function get({base, url, param = "", dontToast, dontCache, cancel, useRefreshTok
 
 function post({base, url, data, param = "", progress, cancel, dontToast, useRefreshToken})
 {
-    const reqUrl = urlMaker({base, url, param})
+    const reqUrl = urlMaker({makeBaseOnEnv, base, url, param})
     if (onGoingReqs[reqUrl]) return handleRepeat({reqUrl})
     else
     {
@@ -119,7 +121,7 @@ function post({base, url, data, param = "", progress, cancel, dontToast, useRefr
 
 function put({base, url, data, param = "", progress, dontToast})
 {
-    const reqUrl = urlMaker({base, url, param})
+    const reqUrl = urlMaker({makeBaseOnEnv, base, url, param})
     const token = cookieHelper.getItem("token")
     return axios.put(
         reqUrl,
@@ -135,7 +137,7 @@ function put({base, url, data, param = "", progress, dontToast})
 
 function patch({base, url, data, param = "", progress, dontToast})
 {
-    const reqUrl = urlMaker({base, url, param})
+    const reqUrl = urlMaker({makeBaseOnEnv, base, url, param})
     const token = cookieHelper.getItem("token")
     return axios.patch(
         reqUrl,
@@ -151,7 +153,7 @@ function patch({base, url, data, param = "", progress, dontToast})
 
 function del({base, url, data, param = "", dontToast})
 {
-    const reqUrl = urlMaker({base, url, param})
+    const reqUrl = urlMaker({makeBaseOnEnv, base, url, param})
     const token = cookieHelper.getItem("token")
     return axios.delete(
         reqUrl,
@@ -164,8 +166,34 @@ function del({base, url, data, param = "", dontToast})
         .catch(err => errorHandler({getTokenWithRefreshToken, dontToast, err, reqUrl, callback: () => del(arguments[0])}))
 }
 
+function sendFile({base, url, param, data, progress, dontToast})
+{
+    const reqUrl = urlMaker({makeBaseOnEnv, base, url, param})
+    const token = cookieHelper.getItem("token")
+    return axios.put(
+        reqUrl,
+        data,
+        {
+            headers: {"Authorization": token},
+            onUploadProgress: e => progress && progress(e),
+        },
+    )
+        .then(res =>
+        {
+            progress?.(100)
+            return res.data
+        })
+        .catch(err => errorHandler({getTokenWithRefreshToken, dontToast, err, reqUrl, callback: () => put(arguments[0])}))
+}
+
 const request = {
-    initRefresh, get, post, put, patch, del,
+    initRefreshAndBaseEnvMaker,
+    get,
+    post,
+    put,
+    patch,
+    del,
+    sendFile,
 }
 
 export default request

@@ -9,7 +9,7 @@
 
 .ripple {
     position: absolute;
-    background: var(--material-color);
+    background: var(--first-material-color);
     border-radius: 50%;
     opacity: 0;
     pointer-events: none;
@@ -19,7 +19,7 @@
 
 .ripple-slow {
     position: absolute;
-    background: var(--material-color);
+    background: var(--first-material-color);
     border-radius: 50%;
     transform: scale(2);
     pointer-events: none;

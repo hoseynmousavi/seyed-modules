@@ -17,7 +17,6 @@ function ImageShow({className, src, alt = "", loading = "lazy", draggable = "fal
 
     function openImage(e)
     {
-        console.log("SUCH A WOW")
         e.stopPropagation()
         popOnPopState({callback: closeImage})
         rect.current = imgRef.current.getBoundingClientRect()

@@ -8,14 +8,12 @@ let onGoingReqs = {}
 let getTokenWithRefreshToken
 let makeBaseOnEnv = base => base
 let offlineSending = []
-let redirectUrl = "/login"
 
-function init({refreshFunc, makeBaseOnEnvFunc, offlineSendingArr, redirectUrlLogout})
+function init({refreshFunc, makeBaseOnEnvFunc, offlineSendingArr})
 {
     getTokenWithRefreshToken = refreshFunc
     makeBaseOnEnv = makeBaseOnEnvFunc
     offlineSending = offlineSendingArr
-    redirectUrl = redirectUrlLogout
 }
 
 function handleRepeat({reqUrl})
@@ -193,7 +191,6 @@ function sendFile({base, url, param, data, progress, dontToast})
 function error({dontToast, err, reqUrl, callback})
 {
     return errorHandler({
-        redirectUrl,
         offlineSending,
         getTokenWithRefreshToken,
         dontToast,

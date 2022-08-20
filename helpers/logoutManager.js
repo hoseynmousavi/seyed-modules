@@ -10,10 +10,10 @@ const configLogout = () =>
     }
 }
 
-const logout = ({logoutReq, redirectUrl}) =>
+const logout = ({logoutReq, redirectUrl} = {}) =>
 {
     logoutReq?.()
-    if (redirectUrl) window.history.replaceState("for-history", "", redirectUrl)
+    if (redirectUrl) window.history.replaceState("for-history", "", "/")
     setTimeout(window.logout, 0)
 }
 

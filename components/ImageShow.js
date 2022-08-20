@@ -77,14 +77,6 @@ function ImageShow({className, src, alt = "", loading = "lazy", draggable = "fal
         }, 370)
     }
 
-    function onClose({isBackground})
-    {
-        return function ()
-        {
-            if (isBackground || window.innerWidth > 480) goBack()
-        }
-    }
-
     return (
         <>
             <ImageLoading key={src} className={className} style={style} loading={loading} ref={imgRef} src={src} alt={alt} draggable={draggable} onClick={zoomable ? openImage : onClick ? onClick : undefined}/>
@@ -92,7 +84,7 @@ function ImageShow({className, src, alt = "", loading = "lazy", draggable = "fal
                 showPicture &&
                 createPortal(
                     <>
-                        <div ref={imageBackRef} className={`back-cont ${dontSwitchGesture} ${showPicture.isHiding ? "hide" : ""}`} onClick={onClose({isBackground: true})}/>
+                        <div ref={imageBackRef} className={`back-cont ${dontSwitchGesture} ${showPicture.isHiding ? "hide" : ""}`} onClick={goBack}/>
                         <img className={`${className} image-show-picture`}
                              ref={imageRef}
                              onMouseDown={onTouchStart}
@@ -114,7 +106,6 @@ function ImageShow({className, src, alt = "", loading = "lazy", draggable = "fal
                              onLoad={openImageLoaded}
                              draggable="false"
                              loading="easter"
-                             onClick={onClose({isBackground: false})}
                         />
                     </>
                     , document.body)

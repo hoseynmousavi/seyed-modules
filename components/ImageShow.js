@@ -26,7 +26,13 @@ function ImageShow({className, src, alt = "", loading = "lazy", draggable = "fal
 
     function openImageLoaded()
     {
-        removeResize.current = onResize({callback: setImgPosition})
+        removeResize.current = onResize({
+            callback: () =>
+            {
+                setImgPosition()
+                rect.current = null
+            },
+        })
         imgRef.current.style.opacity = "0"
         setImgPosition()
     }
@@ -68,7 +74,7 @@ function ImageShow({className, src, alt = "", loading = "lazy", draggable = "fal
     function closeImage()
     {
         removeResize.current?.()
-        const {top, left, width, height} = rect.current
+        const {top, left, width, height} = rect.current || imgRef.current.getBoundingClientRect()
         setShowPicture({isHiding: true, top, left, width, height, borderRadius: getComputedStyle(imgRef.current).getPropertyValue("border-radius"), boxShadow: getComputedStyle(imgRef.current).getPropertyValue("box-shadow")})
         setTimeout(() =>
         {

@@ -107,7 +107,7 @@ function post({base, url, data, param = "", progress, cancel, dontToast, useRefr
             {
                 headers: token && {[useRefreshToken ? "refresh-token" : "Authorization"]: token},
                 cancelToken: source?.token,
-                onUploadProgress: e => progress && progress(e),
+                onUploadProgress: p => progress && progress(Math.floor((p.loaded * 99) / p.total)),
             },
         )
             .then(res =>
@@ -130,7 +130,7 @@ function put({base, url, data, param = "", progress, dontToast})
         data,
         {
             headers: {"Authorization": token},
-            onUploadProgress: e => progress && progress(e),
+            onUploadProgress: p => progress && progress(Math.floor((p.loaded * 99) / p.total)),
         },
     )
         .then(res => res.data)
@@ -146,7 +146,7 @@ function patch({base, url, data, param = "", progress, dontToast})
         data,
         {
             headers: {"Authorization": token},
-            onUploadProgress: e => progress && progress(e),
+            onUploadProgress: p => progress && progress(Math.floor((p.loaded * 99) / p.total)),
         },
     )
         .then(res => res.data)
@@ -177,7 +177,7 @@ function sendFile({base, url, param, data, progress, dontToast})
         data,
         {
             headers: {"Authorization": token},
-            onUploadProgress: e => progress && progress(e),
+            onUploadProgress: p => progress && progress(Math.floor((p.loaded * 99) / p.total)),
         },
     )
         .then(res =>

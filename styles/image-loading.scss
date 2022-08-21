@@ -130,6 +130,10 @@
   }
 }
 
-.avatar-active-border, .avatar-padding-border {
+.avatar-active-border {
+  transition: all ease 0.35s;
+}
+
+.avatar-padding-border {
   transition: all var(--first-transition);
 }

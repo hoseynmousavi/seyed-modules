@@ -79,9 +79,9 @@ function get({base, url, param = "", dontToast, dontCache, cancel, useRefreshTok
                         delete onGoingReqs[reqUrl]
                         return output
                     }
-                    else return error({dontToast, err, onGoingReqs, reqUrl, callback: () => get(arguments[0])})
+                    else return error({dontToast, err, reqUrl, callback: () => get(arguments[0])})
                 }
-                else return error({dontToast, err, onGoingReqs, reqUrl, callback: () => get(arguments[0])})
+                else return error({dontToast, err, reqUrl, callback: () => get(arguments[0])})
             })
     }
 }
@@ -117,7 +117,7 @@ function post({base, url, data, param = "", progress, cancel, dontToast, useRefr
                 delete onGoingReqs[reqUrl]
                 return output
             })
-            .catch(err => error({dontToast, err, onGoingReqs, reqUrl, callback: () => post(arguments[0])}))
+            .catch(err => error({dontToast, err, reqUrl, callback: () => post(arguments[0])}))
     }
 }
 

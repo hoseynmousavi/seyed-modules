@@ -7,9 +7,9 @@ let isRefreshing = false
 
 function rejected({reject})
 {
-    toastManager.addToast({message: tokenExpired, type: FAIL_TOAST})
     logoutManager.logout()
     reject()
+    setTimeout(() => toastManager.addToast({message: tokenExpired, type: FAIL_TOAST}), 150)
 }
 
 function refreshToken({getTokenWithRefreshToken})

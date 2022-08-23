@@ -188,11 +188,13 @@ function sendFile({base, url, param, data, progress, dontToast})
         .catch(err => error({dontToast, err, reqUrl, callback: () => put(arguments[0])}))
 }
 
-function error({dontToast, err, reqUrl, callback})
+function error({useRefreshToken, dontToast, err, reqUrl, callback})
 {
     return errorHandler({
         offlineSending,
         getTokenWithRefreshToken,
+        onGoingReqs,
+        useRefreshToken,
         dontToast,
         err,
         reqUrl,

@@ -4,7 +4,7 @@ import {FAIL_TOAST, INFO_TOAST, REQUEST_CANCEL, REQUEST_QUE} from "../constant/t
 import refreshToken from "./refreshToken"
 import requestDataShareManager from "./requestDataShareManager"
 
-function errorHandler({offlineSending, getTokenWithRefreshToken, useRefreshToken, dontToast, err, onGoingReqs, reqUrl, callback})
+function errorHandler({offlineSending, getTokenWithRefreshToken, onGoingReqs, useRefreshToken, dontToast, err, reqUrl, callback})
 {
     console.log(" %cERROR ", "color: orange; font-size:12px; font-family: 'Helvetica',consolas,sans-serif; font-weight:900;", err.response)
     if (!useRefreshToken && err?.response?.status === 403 && err?.response?.data?.detail === "Forbidden")

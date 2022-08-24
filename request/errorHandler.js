@@ -10,11 +10,7 @@ function errorHandler({offlineSending, getTokenWithRefreshToken, onGoingReqs, us
     if (!useRefreshToken && err?.response?.status === 403 && err?.response?.data?.detail === "Forbidden")
     {
         return refreshToken({getTokenWithRefreshToken})
-            .then(() =>
-            {
-                delete onGoingReqs?.[reqUrl]
-                return callback()
-            })
+            .then(callback)
             .catch(err =>
             {
                 if (onGoingReqs?.[reqUrl]?.count > 1) requestDataShareManager.dataShare({message: {status: "NOK", dataReqUrl: reqUrl, data: err}})

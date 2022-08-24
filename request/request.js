@@ -37,13 +37,14 @@ function handleRepeat({reqUrl})
     })
 }
 
-function get({base, url, param = "", dontToast, dontCache, cancel, useRefreshToken})
+function get({base, url, param = "", dontToast, dontCache, cancel, useRefreshToken, refreshed})
 {
+    console.log(refreshed)
     const reqUrl = urlMaker({makeBaseOnEnv, base, url, param})
-    if (onGoingReqs[reqUrl]) return handleRepeat({reqUrl})
+    if (onGoingReqs[reqUrl] && !refreshed) return handleRepeat({reqUrl})
     else
     {
-        onGoingReqs[reqUrl] = {count: 1}
+        if (!refreshed) onGoingReqs[reqUrl] = {count: 1}
         const token = cookieHelper.getItem(useRefreshToken ? "refreshToken" : "token")
         let source
         if (cancel)
@@ -81,7 +82,7 @@ function get({base, url, param = "", dontToast, dontCache, cancel, useRefreshTok
                     }
                     else return error({dontToast, err, reqUrl, callback: () => get(arguments[0])})
                 }
-                else return error({dontToast, err, reqUrl, callback: () => get(arguments[0])})
+                else return error({dontToast, err, reqUrl, callback: () => get({...arguments[0], refreshed: true})})
             })
     }
 }
@@ -89,36 +90,25 @@ function get({base, url, param = "", dontToast, dontCache, cancel, useRefreshTok
 function post({base, url, data, param = "", progress, cancel, dontToast, useRefreshToken})
 {
     const reqUrl = urlMaker({makeBaseOnEnv, base, url, param})
-    if (onGoingReqs[reqUrl]) return handleRepeat({reqUrl})
-    else
+    const token = cookieHelper.getItem(useRefreshToken ? "refreshToken" : "token")
+    let source
+    if (cancel)
     {
-        onGoingReqs[reqUrl] = {count: 1}
-        const token = cookieHelper.getItem(useRefreshToken ? "refreshToken" : "token")
-        let source
-        if (cancel)
-        {
-            const CancelToken = axios.CancelToken
-            source = CancelToken.source()
-            cancel(source)
-        }
-        return axios.post(
-            reqUrl,
-            data,
-            {
-                headers: token && {[useRefreshToken ? "refresh-token" : "Authorization"]: token},
-                cancelToken: source?.token,
-                onUploadProgress: p => progress && progress(Math.floor((p.loaded * 99) / p.total)),
-            },
-        )
-            .then(res =>
-            {
-                const output = res.data
-                if (onGoingReqs[reqUrl].count > 1) requestDataShareManager.dataShare({message: {status: "OK", dataReqUrl: reqUrl, data: output}})
-                delete onGoingReqs[reqUrl]
-                return output
-            })
-            .catch(err => error({dontToast, err, reqUrl, callback: () => post(arguments[0])}))
+        const CancelToken = axios.CancelToken
+        source = CancelToken.source()
+        cancel(source)
     }
+    return axios.post(
+        reqUrl,
+        data,
+        {
+            headers: token && {[useRefreshToken ? "refresh-token" : "Authorization"]: token},
+            cancelToken: source?.token,
+            onUploadProgress: p => progress && progress(Math.floor((p.loaded * 99) / p.total)),
+        },
+    )
+        .then(res => res.data)
+        .catch(err => error({dontToast, err, reqUrl, callback: () => post(arguments[0])}))
 }
 
 function put({base, url, data, param = "", progress, dontToast})

@@ -39,7 +39,6 @@ function handleRepeat({reqUrl})
 
 function get({base, url, param = "", dontToast, dontCache, cancel, useRefreshToken, refreshed})
 {
-    console.log(refreshed)
     const reqUrl = urlMaker({makeBaseOnEnv, base, url, param})
     if (onGoingReqs[reqUrl] && !refreshed) return handleRepeat({reqUrl})
     else

@@ -1,7 +1,7 @@
 @mixin safari-blur {
   @media not all and (min-resolution: .001dpcm) {
     @supports (-webkit-appearance:none) {
-      backdrop-filter: saturate(150%) blur(20px);
+      backdrop-filter: saturate(100%) blur(20px);
     }
   }
 }

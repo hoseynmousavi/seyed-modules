@@ -1,9 +1,9 @@
 import createMaterialColor from "./createMaterialColor"
-import isSafari from "./isSafari"
+import checkOs from "./checkOs"
 
 function createSafariBlurNav({color, variable, alpha = 0.82})
 {
-    return createMaterialColor({color, variable, alpha: isSafari() ? alpha : 1})
+    return createMaterialColor({color, variable, alpha: checkOs() === "mac" || checkOs() === "ios" ? alpha : 1})
 }
 
 export default createSafariBlurNav

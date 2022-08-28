@@ -90,7 +90,11 @@ function ImageShow({className, src, alt = "", loading = "lazy", draggable = "fal
                 showPicture &&
                 createPortal(
                     <>
-                        <div ref={imageBackRef} className={`back-cont ${dontSwitchGesture} ${showPicture.isHiding ? "hide" : ""}`} onClick={goBack}/>
+                        <div ref={imageBackRef}
+                             className={`back-cont ${dontSwitchGesture} ${showPicture.isHiding ? "hide" : ""}`}
+                             style={{backgroundColor: createSafariBlurNav({variable: "--first-background-color"})}}
+                             onClick={goBack}
+                        />
                         <img className={`${className} image-show-picture`}
                              ref={imageRef}
                              onMouseDown={onTouchStart}

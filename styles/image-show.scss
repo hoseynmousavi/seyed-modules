@@ -1,7 +1,4 @@
-@import "mixin";
-
 .back-cont {
-  @include safari-blur;
   position: fixed;
   top: 0;
   left: 0;
@@ -11,6 +8,7 @@
   height: var(--full-height);
   cursor: pointer;
   z-index: var(--modal-z-index);
+  background-color: var(--first-background-color);
   transition: opacity var(--first-transition);
   animation: fade-in-back ease 0.2s;
 

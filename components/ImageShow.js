@@ -6,7 +6,6 @@ import onResize from "../helpers/onResize"
 import ImageLoading from "./ImageLoading"
 import ImageShowGesture from "../hooks/ImageShowGesture"
 import {dontSwitchGesture} from "../hooks/SwitchGesture"
-import createSafariBlurNav from "../helpers/createSafariBlurNav"
 
 function ImageShow({className, src, alt = "", loading = "lazy", draggable = "false", style = {}, zoomable, onClick})
 {
@@ -91,11 +90,7 @@ function ImageShow({className, src, alt = "", loading = "lazy", draggable = "fal
                 showPicture &&
                 createPortal(
                     <>
-                        <div ref={imageBackRef}
-                             className={`back-cont ${dontSwitchGesture} ${showPicture.isHiding ? "hide" : ""}`}
-                             style={{backgroundColor: createSafariBlurNav({variable: "--first-background-color"})}}
-                             onClick={goBack}
-                        />
+                        <div ref={imageBackRef} className={`back-cont ${dontSwitchGesture} ${showPicture.isHiding ? "hide" : ""}`} onClick={goBack}/>
                         <img className={`${className} image-show-picture`}
                              ref={imageRef}
                              onMouseDown={onTouchStart}

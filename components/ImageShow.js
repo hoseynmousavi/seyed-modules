@@ -91,7 +91,7 @@ function ImageShow({className, src, alt = "", loading = "lazy", draggable = "fal
                 createPortal(
                     <>
                         <div ref={imageBackRef} className={`back-cont ${dontSwitchGesture} ${showPicture.isHiding ? "hide" : ""}`} onClick={goBack}/>
-                        <img className={`${className} image-show-picture`}
+                        <img className={`${className} ${dontSwitchGesture} image-show-picture`}
                              ref={imageRef}
                              onMouseDown={onTouchStart}
                              onTouchStart={onTouchStart}

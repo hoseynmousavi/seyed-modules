@@ -7,6 +7,7 @@ function createSafariBlurNav({color, variable, alpha = 0.82, blur = true})
     return ({
         backgroundColor: createMaterialColor({color, variable, alpha: isApple ? alpha : 1}),
         backdropFilter: isApple && blur ? "saturate(100%) blur(20px)" : "none",
+        webkitBackdropFilter: isApple && blur ? "saturate(100%) blur(20px)" : "none",
     })
 }
 

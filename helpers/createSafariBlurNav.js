@@ -1,5 +1,5 @@
-import createMaterialColor from "../seyed-modules/helpers/createMaterialColor"
-import isSafari from "../seyed-modules/helpers/isSafari"
+import createMaterialColor from "./createMaterialColor"
+import isSafari from "./isSafari"
 
 function createSafariBlurNav({color, variable, alpha = 0.82})
 {

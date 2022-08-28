@@ -6,6 +6,7 @@ import onResize from "../helpers/onResize"
 import ImageLoading from "./ImageLoading"
 import ImageShowGesture from "../hooks/ImageShowGesture"
 import {dontSwitchGesture} from "../hooks/SwitchGesture"
+import createSafariBlurNav from "../helpers/createSafariBlurNav"
 
 function ImageShow({className, src, alt = "", loading = "lazy", draggable = "false", style = {}, zoomable, onClick})
 {

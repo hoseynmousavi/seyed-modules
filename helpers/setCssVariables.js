@@ -4,9 +4,9 @@ function setCssVariables()
 {
     let timeout = null
     const viewport = +process.env.REACT_APP_DESKTOP_VIEWPORT.replace("px", "")
-    fitVariables()
+    fitVariables({isFirstTime: true})
 
-    function fitVariables()
+    function fitVariables({isFirstTime = false})
     {
         clearTimeout(timeout)
         timeout = setTimeout(() =>
@@ -22,7 +22,7 @@ function setCssVariables()
                 "--full-height",
                 clientHeight + "px",
             )
-        }, 100)
+        }, isFirstTime ? 0 : 100)
     }
 
     onResize({callback: fitVariables})

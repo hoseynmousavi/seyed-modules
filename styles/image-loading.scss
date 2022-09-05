@@ -35,6 +35,7 @@
 .image-loading-main {
   opacity: 0;
   margin: 0 !important;
+  object-fit: cover;
 
   &.loaded {
     opacity: 1;

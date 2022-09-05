@@ -11,9 +11,9 @@ let offlineSending = []
 
 function init({refreshFunc, makeBaseOnEnvFunc, offlineSendingArr})
 {
-    getTokenWithRefreshToken = refreshFunc
-    makeBaseOnEnv = makeBaseOnEnvFunc
-    offlineSending = offlineSendingArr
+    if (refreshFunc) getTokenWithRefreshToken = refreshFunc
+    if (makeBaseOnEnvFunc) makeBaseOnEnv = makeBaseOnEnvFunc
+    if (offlineSendingArr) offlineSending = offlineSendingArr
 }
 
 function handleRepeat({reqUrl})

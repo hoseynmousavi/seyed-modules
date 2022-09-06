@@ -1,4 +1,5 @@
 import onResize from "./onResize"
+import isStandalone from "./isStandalone"
 
 function setCssVariables()
 {
@@ -8,8 +9,7 @@ function setCssVariables()
 
     function fitVariables({isFirstTime = false})
     {
-        clearTimeout(timeout)
-        timeout = setTimeout(() =>
+        function setStyle()
         {
             const clientWidth = window.innerWidth
             const clientHeight = window.innerHeight
@@ -22,7 +22,14 @@ function setCssVariables()
                 "--full-height",
                 clientHeight + "px",
             )
-        }, isFirstTime ? 0 : 100)
+        }
+
+        if (isFirstTime || !isStandalone()) setStyle()
+        else
+        {
+            clearTimeout(timeout)
+            timeout = setTimeout(() => setStyle(), 100)
+        }
     }
 
     onResize({callback: fitVariables})

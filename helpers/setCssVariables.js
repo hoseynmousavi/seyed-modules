@@ -28,7 +28,7 @@ function setCssVariables()
         else
         {
             clearTimeout(timeout)
-            timeout = setTimeout(() => setStyle(), 100)
+            timeout = setTimeout(setStyle, 100)
         }
     }
 

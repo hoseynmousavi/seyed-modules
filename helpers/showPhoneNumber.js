@@ -24,7 +24,7 @@ function showPhone(phone)
 
 function fixToNumber(phone)
 {
-    return phone.replace(phoneSeparatorRemove, "")
+    return phone.replace(phoneSeparatorRemove, "").trim().slice(0, 11)
 }
 
 const showPhoneNumber = {

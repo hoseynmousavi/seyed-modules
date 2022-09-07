@@ -157,11 +157,11 @@ function del({base, url, data, param = "", dontToast})
         .catch(err => error({dontToast, err, reqUrl, callback: () => del(arguments[0])}))
 }
 
-function sendFile({base, url, param, data, progress, dontToast})
+function sendFile({base, url, param, data, progress, dontToast, method = "put"})
 {
     const reqUrl = urlMaker({makeBaseOnEnv, base, url, param})
     const token = cookieHelper.getItem("token")
-    return axios.put(
+    return axios[method](
         reqUrl,
         data,
         {
@@ -174,7 +174,7 @@ function sendFile({base, url, param, data, progress, dontToast})
             progress?.(100)
             return res.data
         })
-        .catch(err => error({dontToast, err, reqUrl, callback: () => put(arguments[0])}))
+        .catch(err => error({dontToast, err, reqUrl, callback: () => sendFile(arguments[0])}))
 }
 
 function error({useRefreshToken, dontToast, err, reqUrl, callback})

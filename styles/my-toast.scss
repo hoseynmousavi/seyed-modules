@@ -5,6 +5,8 @@
   max-height: calc(var(--full-height) - 30px);
   overflow: hidden;
   width: calc(100% - 30px);
+  max-width: 450px;
+  margin-inline-start: auto;
   right: 15px;
   z-index: var(--toast-z-index);
   pointer-events: none;
@@ -91,12 +93,12 @@
 }
 
 .toast-item-svg {
-  margin-right: -2px;
+  margin-inline-start: -2px;
   min-width: 18px;
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  margin-left: 8px;
+  margin-inline-end: 8px;
 
   .timer-text {
     padding-top: 3px;
@@ -145,13 +147,13 @@
 .toast-item-close-material {
   width: 20px;
   min-width: 20px;
-  margin-right: 8px;
+  margin-inline-start: 8px;
   height: 20px;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-left: -4px;
+  margin-inline-end: -4px;
   cursor: pointer;
 }
 
@@ -165,7 +167,7 @@
     width: 12px;
     min-width: 12px;
     height: 12px;
-    margin-left: 8px;
+    margin-inline-end: 8px;
     transform: none;
   }
 }
@@ -175,7 +177,7 @@
   align-items: center;
   padding: 8px;
   border-radius: var(--first-radius);
-  margin-left: -10px;
+  margin-inline-end: -10px;
   width: 100px;
   min-width: 100px;
   cursor: pointer;

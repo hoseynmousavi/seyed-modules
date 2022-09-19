@@ -39,7 +39,7 @@ function SwitchGesture({stateRef})
             changeBodyOverflow(true)
             changing.current = true
             posX.current = e.touches?.[0].clientX || e.clientX
-            if (translatePre.current - deltaX.current > 0 && translatePre.current - deltaX.current <= window.innerWidth)
+            if (translatePre.current - deltaX.current >= 0 && translatePre.current - deltaX.current <= window.innerWidth)
             {
                 translatePre.current = translatePre.current - deltaX.current
 

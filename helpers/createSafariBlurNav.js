@@ -1,7 +1,7 @@
 import createMaterialColor from "./createMaterialColor"
 import checkOs from "./checkOs"
 
-function createSafariBlurNav({color, variable, alpha = 0.82, blur = true})
+function createSafariBlurNav({color, variable, alpha = 0.85, blur = true})
 {
     const isApple = checkOs() === "mac" || checkOs() === "ios"
     return ({

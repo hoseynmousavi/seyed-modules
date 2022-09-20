@@ -325,6 +325,7 @@ function Switch({children, isAuth, isTab, tabClassName})
                                index={index}
                                stateLength={state.length}
                                isAuth={isAuth}
+                               isTab={isTab}
                                id={id}
                                onTouchStart={onTouchStart}
                                onTouchMove={onTouchMove}

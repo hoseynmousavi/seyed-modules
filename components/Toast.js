@@ -10,7 +10,7 @@ import MyTimer from "./MyTimer"
 import GetTheme from "../hooks/GetTheme"
 import pageLoaded from "../helpers/pageLoaded"
 
-function Toast({item: {id, message, type, onClick, isUndo}, clearMe})
+function Toast({item: {id, message, type, onClick, isUndo, removeOnChangeLocation}, clearMe})
 {
     const timerInSecond = TIMER_TOAST
     const timerInMili = timerInSecond * 1000
@@ -61,9 +61,19 @@ function Toast({item: {id, message, type, onClick, isUndo}, clearMe})
 
     useLayoutEffect(() =>
     {
-        window.addEventListener("popstate", clearItem, {passive: true})
-        window.addEventListener("pushstate", clearItem, {passive: true})
-        window.addEventListener("replacestate", clearItem, {passive: true})
+        if (removeOnChangeLocation)
+        {
+            window.addEventListener("popstate", clearItem, {passive: true})
+            window.addEventListener("pushstate", clearItem, {passive: true})
+            window.addEventListener("replacestate", clearItem, {passive: true})
+
+            return () =>
+            {
+                window.removeEventListener("popstate", clearItem)
+                window.removeEventListener("pushstate", clearItem)
+                window.removeEventListener("replacestate", clearItem)
+            }
+        }
         // eslint-disable-next-line
     }, [])
 

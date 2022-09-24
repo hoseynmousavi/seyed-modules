@@ -23,7 +23,7 @@ function errorHandler({offlineSending, getTokenWithRefreshToken, onGoingReqs, us
         if (!dontToast && err?.response?.status !== 404 && err?.message !== REQUEST_CANCEL)
         {
             if (err.message === "Network Error" && offlineSending.some(item => reqUrl.includes(item))) toastManager.addToast({message: REQUEST_QUE, type: INFO_TOAST})
-            else toastManager.addToast({message: errorConstant(err), type: FAIL_TOAST})
+            else toastManager.addToast({message: errorConstant(err), type: FAIL_TOAST, removeOnChangeLocation: false})
         }
         if (onGoingReqs?.[reqUrl]?.count > 1) requestDataShareManager.dataShare({message: {status: "NOK", dataReqUrl: reqUrl, data: err}})
         delete onGoingReqs?.[reqUrl]

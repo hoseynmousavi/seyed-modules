@@ -13,7 +13,7 @@ function scrollWithDragDrop({ref})
             y: e.clientY,
         }
         ref.style.cursor = "grabbing"
-        setTimeout(() => ref.classList.toggle("dragging"), 100)
+        setTimeout(() => ref.classList.toggle("dragging"), 200)
         document.addEventListener("mousemove", elementDrag, {passive: true})
         document.addEventListener("mouseup", mouseUp, {passive: true})
     }
@@ -25,7 +25,7 @@ function scrollWithDragDrop({ref})
         ref.scrollTo({top: mosPositions.top - dy, left: mosPositions.left - dx})
     }
 
-    function mouseUp(e)
+    function mouseUp()
     {
         ref.style.cursor = "grab"
         setTimeout(() => ref.classList.toggle("dragging"), 100)

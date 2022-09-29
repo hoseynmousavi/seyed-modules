@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from "react"
 import SwitchItem from "./SwitchItem"
 import SwitchGesture from "../hooks/SwitchGesture"
 import parseTranslateX from "../helpers/parseTranslateX"
+import pageLoaded from "../helpers/pageLoaded"
 
 function Switch({children, isAuth, isTab, tabClassName})
 {
@@ -48,7 +49,33 @@ function Switch({children, isAuth, isTab, tabClassName})
 
         changeRoute({type: "initial"})
 
-        window.addEventListener("popstate", changeRoute, {passive: true})
+        if (pageLoaded()) window.addEventListener("popstate", changeRoute, {passive: true})
+        else
+        {
+            const intervalMs = 400
+            let preLocation = window.location.pathname
+            const interval = setInterval(() =>
+            {
+                const nowLocation = window.location.pathname
+                if (preLocation !== nowLocation)
+                {
+                    changeRoute({type: "popstate"})
+                    preLocation = nowLocation
+                }
+            }, intervalMs)
+
+            function loaded()
+            {
+                setTimeout(() =>
+                {
+                    clearInterval(interval)
+                    window.addEventListener("popstate", changeRoute, {passive: true})
+                    window.removeEventListener("load", loaded)
+                }, intervalMs)
+            }
+
+            window.addEventListener("load", loaded, {passive: true})
+        }
         window.addEventListener("pushstate", changeRoute, {passive: true})
         window.addEventListener("replacestate", changeRoute, {passive: true})
 

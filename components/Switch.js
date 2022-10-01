@@ -13,6 +13,8 @@ function Switch({children, isAuth, isTab, tabClassName})
 
     useEffect(() =>
     {
+        let preLocation = window.location.pathname
+
         function getUrls()
         {
             return children.reduce((sum, item) => item?.props?.path ? [...sum, item.props.path === "*" ? ".*" : item.props.exact ? `^${item.props.path}(\\/?)$` : `^${item.props.path.replace(/:\w+/g, ".*")}`] : [...sum, false], [])
@@ -23,6 +25,7 @@ function Switch({children, isAuth, isTab, tabClassName})
             const {type} = e
             const urls = getUrls()
             const locationTemp = window.location.pathname
+            preLocation = locationTemp
             const showChildIndexTemp = urls.indexOf(urls.filter(url => url && new RegExp(url).test(locationTemp))[0])
             const {showChildIndex, location} = stateRef.current[stateRef.current.length - 1] || {}
             if (e?.target?.history?.state !== "for-history" && location !== locationTemp)
@@ -53,15 +56,10 @@ function Switch({children, isAuth, isTab, tabClassName})
         else
         {
             const intervalMs = 400
-            let preLocation = window.location.pathname
             const interval = setInterval(() =>
             {
                 const nowLocation = window.location.pathname
-                if (preLocation !== nowLocation)
-                {
-                    changeRoute({type: "popstate"})
-                    preLocation = nowLocation
-                }
+                if (preLocation !== nowLocation) changeRoute({type: "popstate"})
             }, intervalMs)
 
             function loaded()

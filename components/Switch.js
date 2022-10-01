@@ -146,9 +146,11 @@ function Switch({children, isAuth, isTab, tabClassName})
                     const nextPage = document.getElementById(stateRef.current[stateRef.current.length - 1].id)
                     const prePage = document.getElementById(stateRef.current[stateRef.current.length - 2].id)
 
+                    nextPage.style.willChange = `transform`
                     nextPage.style.transform = `translate3d(100%, 0, 0)`
                     nextPage.style.opacity = `1`
                     nextPage.style.contentVisibility = `visible`
+                    prePage.style.willChange = `transform`
 
                     let translatePre = 0
                     let translateNext = 100
@@ -168,7 +170,9 @@ function Switch({children, isAuth, isTab, tabClassName})
                         if (translateNext > 0) window.requestAnimationFrame(anime)
                         else
                         {
+                            nextPage.style.removeProperty("willChange")
                             nextPage.style.removeProperty("transform")
+                            prePage.style.removeProperty("willChange")
                             prePage.style.removeProperty("transform")
                             prePage.style.opacity = `0`
                             prePage.style.contentVisibility = `hidden`
@@ -242,9 +246,11 @@ function Switch({children, isAuth, isTab, tabClassName})
                 const next = parseTranslateX({transform: nextPage.style.transform, fallback: -60})
                 const pre = parseTranslateX({transform: prePage.style.transform, fallback: 0})
 
+                nextPage.style.willChange = `transform`
                 nextPage.style.transform = `translate3d(${next}%, 0, 0)`
                 nextPage.style.opacity = `1`
                 nextPage.style.contentVisibility = `visible`
+                prePage.style.willChange = `transform`
 
                 let translatePre = pre
                 let translateNext = next
@@ -264,6 +270,7 @@ function Switch({children, isAuth, isTab, tabClassName})
                     if (translateNext < 0) window.requestAnimationFrame(anime)
                     else
                     {
+                        nextPage.style.removeProperty("willChange")
                         nextPage.style.removeProperty("transform")
                         setStateFunc({type, showChildIndex: showChildIndexTemp, location: locationTemp, delta})
                     }

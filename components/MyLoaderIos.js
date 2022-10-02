@@ -1,28 +1,7 @@
-import {useLayoutEffect, useRef} from "react"
-
 function MyLoaderIos({className, width, color})
 {
-    const contRef = useRef(null)
-    const timer = useRef(null)
-
-    useLayoutEffect(() => iosLoading(), [])
-
-    function iosLoading()
-    {
-        let rotate = 0
-        clearInterval(timer.current)
-        timer.current = setInterval(() =>
-        {
-            if (contRef.current)
-            {
-                contRef.current.style.transform = `rotate(${rotate}deg)`
-                rotate += 45
-            }
-        }, 100)
-    }
-
     return (
-        <div className={`ios-loader ${className}`} ref={contRef} style={{width: width + "px", height: width + "px"}}>
+        <div className={`ios-loader ${className}`} style={{width: width + "px", height: width + "px"}}>
             <div className="ios-loader-part one">
                 <div className="ios-loader-part-after" style={color && {backgroundColor: color}}/>
             </div>

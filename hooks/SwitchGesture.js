@@ -48,6 +48,8 @@ function SwitchGesture({stateRef})
                 nextPage.style.opacity = `1`
                 nextPage.style.contentVisibility = `visible`
 
+                nextPage.style.willChange = `transform`
+                prePage.style.willChange = `transform`
                 prePage.style.transform = `translate3d(${translatePre.current}px,0,0)`
                 nextPage.style.transform = `translate3d(${translateNext.current}px,0,0)`
             }
@@ -97,7 +99,9 @@ function SwitchGesture({stateRef})
             else
             {
                 changeBodyOverflow(false)
+                nextPage.style.removeProperty("willChange")
                 nextPage.style.removeProperty("transform")
+                prePage.style.removeProperty("willChange")
                 prePage.style.removeProperty("transform")
                 nextPage.style.opacity = `0`
                 nextPage.style.contentVisibility = `hidden`

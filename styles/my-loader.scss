@@ -4,6 +4,7 @@
   margin: 0 auto;
   border-radius: 50%;
   opacity: 0.8;
+  animation: ios-rotate 1000ms step-end infinite;
 }
 
 .ios-loader-part {
@@ -98,5 +99,35 @@
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -124px;
+  }
+}
+
+@keyframes ios-rotate {
+  0% {
+    transform: rotate(0)
+  }
+  12.5% {
+    transform: rotate(45deg)
+  }
+  25% {
+    transform: rotate(90deg)
+  }
+  37.5% {
+    transform: rotate(135deg)
+  }
+  50% {
+    transform: rotate(180deg)
+  }
+  62.5% {
+    transform: rotate(225deg)
+  }
+  75% {
+    transform: rotate(270deg)
+  }
+  87.5% {
+    transform: rotate(315deg)
+  }
+  100% {
+    transform: rotate(360deg)
   }
 }

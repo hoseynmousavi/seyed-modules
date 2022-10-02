@@ -2,9 +2,9 @@ const configToast = () =>
 {
     if (!window.addToast)
     {
-        window.addToast = function ({message, type, onClick, isUndo, removeOnChangeLocation})
+        window.addToast = function (props)
         {
-            const event = new CustomEvent("addToast", {detail: {message, type, onClick, isUndo, removeOnChangeLocation}})
+            const event = new CustomEvent("addToast", {detail: props})
             window.dispatchEvent(event)
         }
     }

@@ -5,9 +5,9 @@ const configTheme = () =>
 {
     if (!window.changeBarColor)
     {
-        window.changeBarColor = function ({barColor})
+        window.changeBarColor = function (props)
         {
-            const event = new CustomEvent("changeBarColor", {detail: {barColor}})
+            const event = new CustomEvent("changeBarColor", {detail: props})
             window.dispatchEvent(event)
         }
     }

@@ -1,6 +1,6 @@
 function pageLoaded()
 {
-    return (document.readyState === "complete" || document.readyState === "loaded")
+    return (document.readyState === "complete")
 }
 
 export default pageLoaded

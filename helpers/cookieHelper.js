@@ -1,3 +1,8 @@
+function isHttpOrFile()
+{
+    return (window.location.protocol === "http:" || window.location.protocol === "file:")
+}
+
 function makeKeyOnEnv(key)
 {
     const {hostname} = window.location
@@ -8,7 +13,7 @@ function makeKeyOnEnv(key)
 
 function setItem(key, value, expireDay = 365)
 {
-    if (window.location.protocol === "http:") localStorage.setItem(key, value)
+    if (isHttpOrFile()) localStorage.setItem(key, value)
     else
     {
         const saveKey = makeKeyOnEnv(key)
@@ -20,13 +25,13 @@ function setItem(key, value, expireDay = 365)
 
 function removeItem(key)
 {
-    if (window.location.protocol === "http:") localStorage.removeItem(key)
+    if (isHttpOrFile()) localStorage.removeItem(key)
     else setItem(key, "")
 }
 
 function getItem(key)
 {
-    if (window.location.protocol === "http:") return localStorage.getItem(key)
+    if (isHttpOrFile()) return localStorage.getItem(key)
     else
     {
         const saveKey = makeKeyOnEnv(key)

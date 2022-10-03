@@ -46,13 +46,17 @@ function Toast({item: {id, message, type, onClick, isUndo, removeOnChangeLocatio
                 }
                 else unMountTimer.current = setTimeout(clearItem, timerInMili)
             }
-            else setTimeout(show, 10)
+            else
+            {
+                window.addEventListener("load", show)
+            }
         }
 
         show()
 
         return () =>
         {
+            window.removeEventListener("load", show)
             clearInterval(timerInterval.current)
             clearTimeout(unMountTimer.current)
         }

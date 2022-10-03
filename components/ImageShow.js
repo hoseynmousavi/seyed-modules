@@ -33,7 +33,7 @@ function ImageShow({className, src, alt = "", loading = "lazy", draggable = "fal
                 rect.current = null
             },
         })
-        imgRef.current.style.opacity = "0"
+        setTimeout(() => imgRef.current.style.opacity = "0", 10)
         setImgPosition()
     }
 

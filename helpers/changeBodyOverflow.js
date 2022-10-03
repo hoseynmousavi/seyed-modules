@@ -1,13 +1,14 @@
 function changeBodyOverflow(makeHide)
 {
+    const main = document.getElementById("main-render")
     if (makeHide)
     {
-        document.getElementById("main-render").style.overflowY = "hidden"
+        if (main) main.style.overflowY = "hidden"
         document.body.style.overflowY = "hidden"
     }
     else
     {
-        document.getElementById("main-render").style.removeProperty("overflow-y")
+        if (main) main.style.removeProperty("overflow-y")
         document.body.style.removeProperty("overflow-y")
     }
 }

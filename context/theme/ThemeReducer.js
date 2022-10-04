@@ -44,16 +44,11 @@ function ThemeProvider({children, changeVariables})
         setCssVariables()
         themeManager.configTheme()
         const defaultDark = window?.matchMedia("(prefers-color-scheme: dark)")
-
-        setTheme({isInitial: true})
-        defaultDark.addEventListener("change", setTheme)
-
-        function setTheme({isInitial})
-        {
-            const theme = cookieHelper.getItem("theme")
-            if (theme === "dark" || (!theme && defaultDark?.matches)) ThemeActions.changeTheme({theme: "dark", save: false, changeVariables, dispatch})
-            else if (!isInitial && !theme) ThemeActions.changeTheme({theme: defaultDark?.matches, save: false, changeVariables, dispatch})
-        }
+        const theme = cookieHelper.getItem("theme")
+        if (theme === "dark" || (!theme && defaultDark?.matches)) ThemeActions.changeTheme({theme: "dark", save: false, changeVariables, dispatch})
+        defaultDark.addEventListener("change", () =>
+            ThemeActions.changeTheme({theme: defaultDark?.matches, save: true, changeVariables, dispatch}),
+        )
         // eslint-disable-next-line
     }, [])
 

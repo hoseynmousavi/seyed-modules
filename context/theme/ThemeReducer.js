@@ -47,7 +47,7 @@ function ThemeProvider({children, changeVariables})
         const theme = cookieHelper.getItem("theme")
         if (theme === "dark" || (!theme && defaultDark?.matches)) ThemeActions.changeTheme({theme: "dark", save: false, changeVariables, dispatch})
         defaultDark.addEventListener("change", () =>
-            ThemeActions.changeTheme({theme: defaultDark?.matches, save: true, changeVariables, dispatch}),
+            ThemeActions.changeTheme({theme: defaultDark?.matches ? "dark" : "light", save: true, changeVariables, dispatch}),
         )
         // eslint-disable-next-line
     }, [])

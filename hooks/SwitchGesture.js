@@ -69,6 +69,7 @@ function SwitchGesture({stateRef})
                 if (translatePre.current > window.innerWidth / 2) back()
                 else restore()
             }
+            changeBodyOverflow(false)
         }
     }
 
@@ -98,7 +99,6 @@ function SwitchGesture({stateRef})
             if (translatePreTemp > 0) window.requestAnimationFrame(anime)
             else
             {
-                changeBodyOverflow(false)
                 nextPage.style.removeProperty("willChange")
                 nextPage.style.removeProperty("transform")
                 prePage.style.removeProperty("willChange")

@@ -34,7 +34,7 @@ body {
   font-family: "my-font", serif;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
-  overscroll-behavior-y: contain;
+  overscroll-behavior: contain;
   -webkit-font-smoothing: antialiased;
 
   @media screen and (min-width: 450px) {
@@ -72,6 +72,10 @@ button, a, input, textarea, h4, h3, h2, h1, select, video, p, track, label, div,
   &:focus {
     outline: none;
   }
+}
+
+div {
+  overscroll-behavior: contain;
 }
 
 h1, h2, h3, h4 {

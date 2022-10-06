@@ -1,8 +1,8 @@
-import isIos from "./isIos"
+import checkOs from "./checkOs"
 
 function blockIosSwipe()
 {
-    if (isIos())
+    if (checkOs() === "ios")
     {
         document.getElementById("root").ontouchstart = e =>
         {

@@ -34,7 +34,6 @@ body {
   font-family: "my-font", serif;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
-  overscroll-behavior: contain;
   -webkit-font-smoothing: antialiased;
 
   @media screen and (min-width: 450px) {
@@ -54,6 +53,10 @@ body {
   margin: 0 auto;
   overflow: hidden;
   height: var(--full-height);
+
+  &.ios {
+    overscroll-behavior: contain;
+  }
 }
 
 button, a, input, textarea, h4, h3, h2, h1, select, video, p, track, label, div, header, main, footer, section, svg, img, span {

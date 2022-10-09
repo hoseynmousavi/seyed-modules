@@ -1,4 +1,4 @@
-import {FAIL_TOAST, tokenExpired} from "../constant/toastTypes"
+import {INFO_TOAST, tokenExpired} from "../constant/toastTypes"
 import refreshTokenManager from "./refreshTokenManager"
 import toastManager from "../helpers/toastManager"
 import logoutManager from "../helpers/logoutManager"
@@ -9,7 +9,7 @@ function rejected({reject})
 {
     logoutManager.logout()
     reject()
-    setTimeout(() => toastManager.addToast({message: tokenExpired, type: FAIL_TOAST}), 150)
+    setTimeout(() => toastManager.addToast({message: tokenExpired, type: INFO_TOAST}), 150)
 }
 
 function refreshToken({getTokenWithRefreshToken})

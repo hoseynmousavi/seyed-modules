@@ -15,8 +15,14 @@
 }
 
 @font-face {
-  font-family: "my-font-bold";
+  font-family: "my-font-demibold";
   src: url("../media/fonts/dana-fanum-demibold.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "my-font-bold";
+  src: url("../media/fonts/dana-fanum-bold.woff2") format("woff2");
   font-display: swap;
 }
 
@@ -82,7 +88,7 @@ div {
 }
 
 h1, h2, h3, h4 {
-  font-family: my-font-bold, serif;
+  font-family: "my-font-demibold", serif;
 }
 
 a {

@@ -21,12 +21,15 @@ function SlideGesture({slideNumbers, rightToLeft = true, mainSlideAnime = false,
     {
         posX.current = e.touches?.[0].clientX || e.clientX
         posY.current = e.touches?.[0].clientY || e.clientY
-        started.current = true
-
-        if (!e.touches?.[0].clientX)
+        if (posX.current && posY.current)
         {
-            document.addEventListener("mousemove", onTouchMove, {passive: true})
-            document.addEventListener("mouseup", onTouchEnd, {passive: true})
+            started.current = true
+
+            if (!e.touches?.[0].clientX)
+            {
+                document.addEventListener("mousemove", onTouchMove, {passive: true})
+                document.addEventListener("mouseup", onTouchEnd, {passive: true})
+            }
         }
     }
 

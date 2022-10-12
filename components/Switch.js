@@ -17,7 +17,10 @@ function Switch({children, isAuth, isTab, tabClassName})
 
         function getUrls()
         {
-            return children.reduce((sum, item) => item?.props?.path ? [...sum, item.props.path === "*" ? ".*" : item.props.exact ? `^${item.props.path}(\\/?)$` : `^${item.props.path.replace(/:\w+/g, ".*")}`] : [...sum, false], [])
+            return Array.isArray(children) ?
+                children.reduce((sum, item) => item?.props?.path ? [...sum, item.props.path === "*" ? ".*" : item.props.exact ? `^${item.props.path}(\\/?)$` : `^${item.props.path.replace(/:\w+/g, ".*")}`] : [...sum, false], [])
+                :
+                children?.props?.path ? [children.props.path === "*" ? ".*" : children.props.exact ? `^${children.props.path}(\\/?)$` : `^${children.props.path.replace(/:\w+/g, ".*")}`] : [false]
         }
 
         function changeRoute(e)
@@ -348,12 +351,12 @@ function Switch({children, isAuth, isTab, tabClassName})
     const output = state.map((item, index) =>
     {
         const {showChildIndex, location, id} = item
-        if (children[showChildIndex])
+        const element = Array.isArray(children) ? children[showChildIndex] : children
+        if (element)
         {
             return <SwitchItem key={id}
-                               showChildIndex={showChildIndex}
+                               element={element}
                                location={location}
-                               children={children}
                                index={index}
                                stateLength={state.length}
                                isAuth={isAuth}

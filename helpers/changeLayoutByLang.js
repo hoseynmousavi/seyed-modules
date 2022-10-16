@@ -6,7 +6,11 @@ function changeLayoutByLang(language)
 {
     const styleId = "lang-style"
     cookieHelper.setItem("language", language)
-    document.body.classList.toggle("ltr", language === "en")
+
+    document.documentElement.style.setProperty(
+        "--language-direction",
+        language === "en" ? "ltr" : "rtl",
+    )
 
     if (language === "en")
     {

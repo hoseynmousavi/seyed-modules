@@ -2,6 +2,7 @@ import {createContext, useEffect, useReducer} from "react"
 import {CHANGE_LANGUAGE} from "./LanguageTypes"
 import cookieHelper from "../../../seyed-modules/helpers/cookieHelper"
 import LanguageActions from "./LanguageActions"
+import changeLayoutByLang from "../../helpers/changeLayoutByLang"
 
 export const LanguageContext = createContext(null)
 
@@ -18,8 +19,7 @@ function reducer(state, action)
         case CHANGE_LANGUAGE:
         {
             const {language} = action.payload
-            document.body.classList.toggle("ltr", language === "en")
-            cookieHelper.setItem("language", language)
+            changeLayoutByLang(language)
             return {
                 ...state,
                 language,

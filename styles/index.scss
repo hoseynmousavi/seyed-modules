@@ -42,6 +42,10 @@ body {
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
 
+  &.ltr {
+    direction: ltr;
+  }
+
   @media screen and (min-width: 450px) {
     background-color: var(--solid-dark) !important;
     .index-temp {

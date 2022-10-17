@@ -25,8 +25,7 @@ function LanguageProvider({children, changeVariables, defaultLanguage = "fa"})
         {
             case CHANGE_LANGUAGE:
             {
-                const {language, changeVariables} = action.payload
-                changeLayoutByLang({language, changeVariables})
+                const {language} = action.payload
                 return {
                     ...state,
                     language,

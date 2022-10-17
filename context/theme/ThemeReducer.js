@@ -29,8 +29,7 @@ function ThemeProvider({children, changeVariables})
         {
             case TOGGLE_THEME:
             {
-                const {theme, save, changeVariables} = action.payload
-                toggleTheme({theme, changeVariables})
+                const {theme, save} = action.payload
                 if (save) cookieHelper.setItem("theme", theme === "dark" ? "dark" : "light")
                 return {
                     ...state,

@@ -1,7 +1,7 @@
 import cookieHelper from "./cookieHelper"
-import fontReg from "../media/fonts/Poppins-Light.woff"
-import fontMed from "../media/fonts/Poppins-SemiBold.woff"
-import fontBold from "../media/fonts/Poppins-Bold.woff"
+import fontReg from "../media/fonts/Poppins-regular.woff2"
+import fontSemiBold from "../media/fonts/Poppins-semibold.woff2"
+import fontBold from "../media/fonts/Poppins-bold.woff2"
 import toggleFonts from "./toggleFonts"
 
 function changeLayoutByLang({language, changeVariables})
@@ -29,7 +29,7 @@ function changeLayoutByLang({language, changeVariables})
     
             @font-face {
                 font-family: "my-font-demibold";
-                src: url("${fontMed}") format("woff");
+                src: url("${fontSemiBold}") format("woff");
                 font-display: swap;
             }
 

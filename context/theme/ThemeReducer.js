@@ -6,6 +6,7 @@ import themeManager from "../../helpers/themeManager"
 import setCssVariables from "../../helpers/setCssVariables"
 import cookieHelper from "../../helpers/cookieHelper"
 import checkOs from "../../helpers/checkOs"
+import toggleTheme from "../../helpers/toggleTheme"
 
 export const ThemeContext = createContext(null)
 
@@ -30,6 +31,7 @@ function ThemeProvider({children, changeVariables})
             {
                 const {theme, save} = action.payload
                 if (save) cookieHelper.setItem("theme", theme === "dark" ? "dark" : "light")
+                toggleTheme({theme, changeVariables})
                 return {
                     ...state,
                     theme,
@@ -50,9 +52,9 @@ function ThemeProvider({children, changeVariables})
         themeManager.configTheme()
         const defaultDark = window?.matchMedia("(prefers-color-scheme: dark)")
         const theme = cookieHelper.getItem("theme")
-        if (theme === "dark" || (!theme && defaultDark?.matches)) ThemeActions.changeTheme({theme: "dark", save: false, changeVariables, dispatch})
+        if (theme === "dark" || (!theme && defaultDark?.matches)) ThemeActions.changeTheme({theme: "dark", save: false, dispatch})
         defaultDark.addEventListener("change", () =>
-            ThemeActions.changeTheme({theme: defaultDark?.matches ? "dark" : "light", save: true, changeVariables, dispatch}),
+            ThemeActions.changeTheme({theme: defaultDark?.matches ? "dark" : "light", save: true, dispatch}),
         )
         // eslint-disable-next-line
     }, [])

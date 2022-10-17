@@ -10,36 +10,39 @@ import toggleTheme from "../../helpers/toggleTheme"
 
 export const ThemeContext = createContext(null)
 
-const initialState = {
-    theme: "light",
-}
-
-const init = () => initialState
-
-function reducer(state, action)
-{
-    switch (action.type)
-    {
-        case TOGGLE_THEME:
-        {
-            const {theme, save, changeVariables} = action.payload
-            toggleTheme({theme, changeVariables})
-            if (save) cookieHelper.setItem("theme", theme === "dark" ? "dark" : "light")
-            return {
-                ...state,
-                theme,
-            }
-        }
-        default:
-        {
-            throw new Error()
-        }
-    }
-}
-
 function ThemeProvider({children, changeVariables})
 {
+    const initialState = {
+        theme: "light",
+    }
+
     const [state, dispatch] = useReducer(reducer, initialState, init)
+
+    function init()
+    {
+        return initialState
+    }
+
+    function reducer(state, action)
+    {
+        switch (action.type)
+        {
+            case TOGGLE_THEME:
+            {
+                const {theme, save, changeVariables} = action.payload
+                toggleTheme({theme, changeVariables})
+                if (save) cookieHelper.setItem("theme", theme === "dark" ? "dark" : "light")
+                return {
+                    ...state,
+                    theme,
+                }
+            }
+            default:
+            {
+                throw new Error()
+            }
+        }
+    }
 
     useEffect(() =>
     {

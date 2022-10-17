@@ -18,8 +18,8 @@ function reducer(state, action)
     {
         case CHANGE_LANGUAGE:
         {
-            const {language} = action.payload
-            changeLayoutByLang(language)
+            const {language, changeVariables} = action.payload
+            changeLayoutByLang({language, changeVariables})
             return {
                 ...state,
                 language,
@@ -32,14 +32,15 @@ function reducer(state, action)
     }
 }
 
-function LanguageProvider({children})
+function LanguageProvider({children, changeVariables})
 {
     const [state, dispatch] = useReducer(reducer, initialState, init)
 
     useEffect(() =>
     {
         const language = cookieHelper.getItem("language")
-        if (language && language !== "fa") LanguageActions.changeLanguage({language, dispatch})
+        if (language && language !== "fa") LanguageActions.changeLanguage({language, changeVariables, dispatch})
+        // eslint-disable-next-line
     }, [])
 
     return (

@@ -1,5 +1,8 @@
+import themeManager from "./themeManager"
+
 function toggleTheme({theme, changeVariables})
 {
+    themeManager.resetBarColor()
     if (theme === "dark")
     {
         changeVariables.forEach(item =>

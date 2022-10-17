@@ -6,6 +6,7 @@ import themeManager from "../../helpers/themeManager"
 import setCssVariables from "../../helpers/setCssVariables"
 import cookieHelper from "../../helpers/cookieHelper"
 import checkOs from "../../helpers/checkOs"
+import toggleTheme from "../../helpers/toggleTheme"
 
 export const ThemeContext = createContext(null)
 
@@ -21,7 +22,8 @@ function reducer(state, action)
     {
         case TOGGLE_THEME:
         {
-            const {theme, save} = action.payload
+            const {theme, save, changeVariables} = action.payload
+            toggleTheme({theme, changeVariables})
             if (save) cookieHelper.setItem("theme", theme === "dark" ? "dark" : "light")
             return {
                 ...state,

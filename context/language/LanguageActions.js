@@ -1,10 +1,10 @@
 import {CHANGE_LANGUAGE} from "./LanguageTypes"
 
-function changeLanguage({language, dispatch})
+function changeLanguage({language, changeVariables, dispatch})
 {
     dispatch({
         type: CHANGE_LANGUAGE,
-        payload: {language},
+        payload: {language, changeVariables},
     })
 }
 

@@ -2,8 +2,9 @@ import cookieHelper from "./cookieHelper"
 import fontReg from "../media/fonts/Poppins-Light.woff"
 import fontMed from "../media/fonts/Poppins-SemiBold.woff"
 import fontBold from "../media/fonts/Poppins-Bold.woff"
+import toggleFonts from "./toggleFonts"
 
-function changeLayoutByLang(language)
+function changeLayoutByLang({language, changeVariables})
 {
     const styleId = "lang-style"
     cookieHelper.setItem("language", language)
@@ -12,6 +13,8 @@ function changeLayoutByLang(language)
         "--language-direction",
         language === "en" ? "ltr" : "rtl",
     )
+
+    toggleFonts({language, changeVariables})
 
     if (language === "en")
     {

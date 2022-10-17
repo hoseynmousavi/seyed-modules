@@ -1,5 +1,3 @@
-import themeManager from "./themeManager"
-
 function toggleTheme({theme, changeVariables})
 {
     if (theme === "dark")
@@ -22,7 +20,6 @@ function toggleTheme({theme, changeVariables})
             )
         })
     }
-    themeManager.resetBarColor()
 }
 
 export default toggleTheme

@@ -1,4 +1,4 @@
-function toggleTheme({theme, changeVariables})
+function toggleTheme({theme, changeVariables = []})
 {
     if (theme === "dark")
     {

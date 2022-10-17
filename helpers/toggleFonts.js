@@ -1,4 +1,4 @@
-function toggleFonts({language, changeVariables})
+function toggleFonts({language, changeVariables = []})
 {
     if (language === "en")
     {

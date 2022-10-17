@@ -6,40 +6,43 @@ import changeLayoutByLang from "../../helpers/changeLayoutByLang"
 
 export const LanguageContext = createContext(null)
 
-const initialState = {
-    language: "fa",
-}
-
-const init = () => initialState
-
-function reducer(state, action)
+function LanguageProvider({children, changeVariables, defaultLanguage = "fa"})
 {
-    switch (action.type)
+    const initialState = {
+        language: defaultLanguage,
+    }
+
+    const [state, dispatch] = useReducer(reducer, initialState, init)
+
+    function init()
     {
-        case CHANGE_LANGUAGE:
+        return initialState
+    }
+
+    function reducer(state, action)
+    {
+        switch (action.type)
         {
-            const {language, changeVariables} = action.payload
-            changeLayoutByLang({language, changeVariables})
-            return {
-                ...state,
-                language,
+            case CHANGE_LANGUAGE:
+            {
+                const {language, changeVariables} = action.payload
+                changeLayoutByLang({language, changeVariables})
+                return {
+                    ...state,
+                    language,
+                }
+            }
+            default:
+            {
+                throw new Error()
             }
         }
-        default:
-        {
-            throw new Error()
-        }
     }
-}
-
-function LanguageProvider({children, changeVariables})
-{
-    const [state, dispatch] = useReducer(reducer, initialState, init)
 
     useEffect(() =>
     {
         const language = cookieHelper.getItem("language")
-        if (language && language !== "fa") LanguageActions.changeLanguage({language, changeVariables, dispatch})
+        if (language && language !== defaultLanguage) LanguageActions.changeLanguage({language, changeVariables, dispatch})
         // eslint-disable-next-line
     }, [])
 

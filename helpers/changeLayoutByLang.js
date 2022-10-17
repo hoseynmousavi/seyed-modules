@@ -23,19 +23,19 @@ function changeLayoutByLang({language, changeVariables})
         newStyle.appendChild(document.createTextNode(`
             @font-face {
                 font-family: "my-font";
-                src: url("${fontReg}") format("woff");
+                src: url("${fontReg}") format("woff2");
                 font-display: swap;
             }
     
             @font-face {
                 font-family: "my-font-demibold";
-                src: url("${fontSemiBold}") format("woff");
+                src: url("${fontSemiBold}") format("woff2");
                 font-display: swap;
             }
 
             @font-face {
                 font-family: "my-font-bold";
-                src: url("${fontBold}") format("woff");
+                src: url("${fontBold}") format("woff2");
                 font-display: swap;
             }
             `))

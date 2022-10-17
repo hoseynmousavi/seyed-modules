@@ -1,6 +1,7 @@
 import cookieHelper from "./cookieHelper"
-import fontReg from "../media/fonts/Roboto-Regular-webfont.woff"
-import fontMed from "../media/fonts/Roboto-Medium-webfont.woff"
+import fontReg from "../media/fonts/Poppins-Light.woff"
+import fontMed from "../media/fonts/Poppins-SemiBold.woff"
+import fontBold from "../media/fonts/Poppins-Bold.woff"
 
 function changeLayoutByLang(language)
 {
@@ -31,7 +32,7 @@ function changeLayoutByLang(language)
 
             @font-face {
                 font-family: "my-font-bold";
-                src: url("${fontMed}") format("woff");
+                src: url("${fontBold}") format("woff");
                 font-display: swap;
             }
             `))

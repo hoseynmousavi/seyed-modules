@@ -1,7 +1,8 @@
-import {INFO_TOAST, tokenExpired} from "../constant/toastTypes"
+import {INFO_TOAST, TokenExpired} from "../constant/toastTypes"
 import refreshTokenManager from "./refreshTokenManager"
 import toastManager from "../helpers/toastManager"
 import logoutManager from "../helpers/logoutManager"
+import cookieHelper from "../helpers/cookieHelper"
 
 let isRefreshing = false
 
@@ -9,7 +10,8 @@ function rejected({reject})
 {
     logoutManager.logout()
     reject()
-    setTimeout(() => toastManager.addToast({message: tokenExpired, type: INFO_TOAST}), 150)
+    const language = cookieHelper.getItem("language") || "fa"
+    setTimeout(() => toastManager.addToast({message: TokenExpired(language), type: INFO_TOAST}), 150)
 }
 
 function refreshToken({getTokenWithRefreshToken})

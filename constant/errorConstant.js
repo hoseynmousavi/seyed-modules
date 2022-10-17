@@ -1,5 +1,9 @@
+import cookieHelper from "../helpers/cookieHelper"
+
 function errorConstant(error)
 {
+    const language = cookieHelper.getItem("language") || "fa"
+    const isEn = language === "en"
     return (
         error?.response?.data?.status
         ||
@@ -8,11 +12,16 @@ function errorConstant(error)
         error?.response?.data?.message
         ||
         {
-            "Network Error": "خطایی رخ داد، اتصال اینترنت خود را بررسی کنید.",
+            "Network Error": isEn ? "An Error Occurred, Please Check Your Connection." : "خطایی رخ داد، اتصال اینترنت خود را بررسی کنید.",
         }
             [error?.message]
         ||
-        "خطایی رخ داد؛ مجدداً تلاش کنید."
+        (
+            isEn ?
+                "An Error Occurred, Please Retry Again."
+                :
+                "خطایی رخ داد؛ مجدداً تلاش کنید."
+        )
     )
 }
 

@@ -2,7 +2,6 @@ import {createContext, useEffect, useReducer} from "react"
 import {CHANGE_LANGUAGE} from "./LanguageTypes"
 import cookieHelper from "../../../seyed-modules/helpers/cookieHelper"
 import LanguageActions from "./LanguageActions"
-import changeLayoutByLang from "../../helpers/changeLayoutByLang"
 
 export const LanguageContext = createContext(null)
 

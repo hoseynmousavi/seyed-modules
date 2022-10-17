@@ -6,7 +6,6 @@ import themeManager from "../../helpers/themeManager"
 import setCssVariables from "../../helpers/setCssVariables"
 import cookieHelper from "../../helpers/cookieHelper"
 import checkOs from "../../helpers/checkOs"
-import toggleTheme from "../../helpers/toggleTheme"
 
 export const ThemeContext = createContext(null)
 

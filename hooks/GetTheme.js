@@ -7,9 +7,9 @@ function GetTheme()
     const {state: {theme}, dispatch} = useContext(ThemeContext)
     const isDark = theme === "dark"
 
-    function changeTheme({theme, save, changeVariables})
+    function changeTheme({theme, save})
     {
-        ThemeActions.changeTheme({theme, save, changeVariables, dispatch})
+        ThemeActions.changeTheme({theme, save, dispatch})
     }
 
     return {isDark, changeTheme}

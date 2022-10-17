@@ -13,9 +13,9 @@ function GetTextConstant()
     const toastConstant = language === "fa" ? faToastConstant : enToastConstant
     const direction = language === "fa" ? "rtl" : "ltr"
 
-    function changeLang({language, changeVariables})
+    function changeLang({language})
     {
-        LanguageActions.changeLanguage({language, changeVariables, dispatch})
+        LanguageActions.changeLanguage({language, dispatch})
     }
 
     return {textConstant, toastConstant, language, direction, changeLang}

@@ -1,3 +1,8 @@
+.switch-tab-cont {
+  position: relative;
+  height: 100%;
+}
+
 .switch-cont {
   position: absolute;
   left: 0;
@@ -7,6 +12,11 @@
   overflow: hidden;
   box-shadow: 0 3px 11px rgba(0, 0, 0, 0.2);
   transform: translate3d(0, 0, 0);
+
+  &.tab {
+    height: 100%;
+    box-shadow: none;
+  }
 }
 
 .switch {

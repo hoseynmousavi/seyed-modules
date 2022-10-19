@@ -370,7 +370,7 @@ function Switch({children, isAuth, isTab, tabClassName})
         else return null
     })
 
-    if (isTab) return <div className={tabClassName} ref={contRef}>{output}</div>
+    if (isTab) return <div className={`switch-tab-cont ${tabClassName}`} ref={contRef}>{output}</div>
     else return output
 }
 

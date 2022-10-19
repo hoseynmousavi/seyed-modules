@@ -5,9 +5,9 @@ function SwitchItem({index, stateLength, element, location, isAuth, isTab, id, o
 {
     const isRendering = index === stateLength - 1
     const output = <Suspense fallback={<LoadingWrapper haveBg key="loading-wrapper"/>}>{React.cloneElement(element, {location, isRendering})}</Suspense>
-    if (isAuth || isTab) return output
+    if (isAuth) return output
     else return (
-        <div className="switch-cont"
+        <div className={`switch-cont ${isTab ? "tab" : ""}`}
              onTouchStart={onTouchStart}
              onTouchMove={onTouchMove}
              onTouchEnd={onTouchEnd}

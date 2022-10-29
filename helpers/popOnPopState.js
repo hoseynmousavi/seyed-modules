@@ -16,7 +16,7 @@ function popOnPopState({key = "Escape", callback, dontPush, dontChangeOverflow, 
         if (pushed && !dontPush) pushed--
         else
         {
-            callback()
+            callback?.()
             window.removeEventListener("popstate", onPopState)
             window.removeEventListener("pushstate", onPushState)
             if (!dontChangeOverflow) changeBodyOverflow(false)

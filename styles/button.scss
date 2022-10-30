@@ -16,6 +16,10 @@
     background-color: var(--first-color);
   }
 
+  &.remove {
+    background-color: var(--toast-fail-text);
+  }
+
   &.skip {
     background-color: var(--second-background-color);
     color: var(--second-text-color);

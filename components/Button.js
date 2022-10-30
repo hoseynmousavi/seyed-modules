@@ -4,7 +4,6 @@ import MyLoader from "./MyLoader"
 
 function Button({type = "first", className, style, loading, disable, onClick, onDisableClick, children, backgroundColor, loaderWidth = 25})
 {
-    // wow
     return (
         <Material className={`button ${type} ${className} ${loading ? "loading" : ""} ${disable ? "disable" : "active"}`} style={style} disable={disable || loading} onClick={onClick} onDisableClick={onDisableClick} backgroundColor={backgroundColor}>
             {

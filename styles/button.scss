@@ -17,7 +17,8 @@
   }
 
   &.remove {
-    background-color: var(--toast-fail-text);
+    background-color: var(--toast-fail-bg);
+    color: var(--toast-fail-text);
   }
 
   &.skip {

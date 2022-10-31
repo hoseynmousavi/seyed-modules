@@ -14,7 +14,6 @@ function Toast({item: {id, message, type, onClick, isUndo, removeOnChangeLocatio
 {
     const timerInSecond = TIMER_TOAST
     const timerInMili = timerInSecond * 1000
-    const {isDark} = GetTheme()
     const [timerRemain, setTimerRemain] = useState(timerInMili)
     const toastRef = useRef(null)
     const toastMessageRef = useRef(null)
@@ -103,24 +102,24 @@ function Toast({item: {id, message, type, onClick, isUndo, removeOnChangeLocatio
     }
 
     return (
-        <div className={`toast-item ${isDark ? "dark" : ""} ${type}`} ref={toastRef} style={{height: "0", opacity: "0", marginBottom: "0", padding: "0 16px"}} onTouchEnd={!(isUndo || onClick) ? clearItem : null} onClick={onClick ? onClickFunc : clearItem}>
+        <div className="toast-item" ref={toastRef} style={{height: "0", opacity: "0", marginBottom: "0", padding: "0 16px"}} onTouchEnd={!(isUndo || onClick) ? clearItem : null} onClick={onClick ? onClickFunc : clearItem}>
             <div className="toast-item-message" ref={toastMessageRef}>
                 {
                     isUndo ?
                         <MyTimer percent={timerRemain / timerInMili * 100}
                                  text={Math.ceil(timerRemain / timerInMili * timerInSecond)}
-                                 color={isDark ? "var(--first-text-color)" : type === SUCCESS_TOAST ? "var(--toast-success-text)" : type === FAIL_TOAST ? "var(--toast-fail-text)" : "var(--toast-info-text)"}
+                                 color={type === SUCCESS_TOAST ? "var(--toast-success-text)" : type === FAIL_TOAST ? "var(--toast-fail-text)" : "var(--toast-info-text)"}
                                  className="toast-item-svg"
                                  haveBg
                         />
                         :
                         type === SUCCESS_TOAST ?
-                            <CheckSvg className={`toast-item-svg success ${isDark ? "dark" : ""}`}/>
+                            <CheckSvg className="toast-item-svg success"/>
                             :
                             type === INFO_TOAST ?
-                                <InfoSvg className={`toast-item-svg info ${isDark ? "dark" : ""}`}/>
+                                <InfoSvg className="toast-item-svg info"/>
                                 :
-                                <CloseSvg className={`toast-item-svg fail ${isDark ? "dark" : ""}`}/>
+                                <CloseSvg className="toast-item-svg fail"/>
                 }
                 {message}
             </div>

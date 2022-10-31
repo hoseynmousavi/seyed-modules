@@ -53,38 +53,6 @@
       stroke: var(--toast-fail-text);
     }
   }
-
-  &.dark {
-    &.SUCCESS_TOAST {
-      background-color: var(--toast-success-text);
-      color: var(--solid-light);
-
-      .toast-item-close {
-        fill: var(--solid-light);
-        stroke: var(--solid-light);
-      }
-    }
-
-    &.INFO_TOAST {
-      background-color: var(--toast-info-text);
-      color: var(--solid-light);
-
-      .toast-item-close {
-        fill: var(--solid-light);
-        stroke: var(--solid-light);
-      }
-    }
-
-    &.FAIL_TOAST {
-      background-color: var(--toast-fail-text);
-      color: var(--solid-light);
-
-      .toast-item-close {
-        fill: var(--solid-light);
-        stroke: var(--solid-light);
-      }
-    }
-  }
 }
 
 .toast-item-message {
@@ -120,26 +88,6 @@
   &.fail {
     path {
       stroke: var(--toast-fail-text)
-    }
-  }
-
-  &.dark {
-    &.success {
-      path {
-        stroke: var(--solid-light)
-      }
-    }
-
-    &.info {
-      path, circle {
-        stroke: var(--solid-light)
-      }
-    }
-
-    &.fail {
-      path {
-        stroke: var(--solid-light)
-      }
     }
   }
 }

@@ -7,7 +7,6 @@ import CloseSvg from "../media/svg/CloseSvg"
 import {FAIL_TOAST, INFO_TOAST, SUCCESS_TOAST, TIMER_TOAST} from "../constant/toastTypes"
 import UndoSvg from "../media/svg/UndoSvg"
 import MyTimer from "./MyTimer"
-import GetTheme from "../hooks/GetTheme"
 import pageLoaded from "../helpers/pageLoaded"
 
 function Toast({item: {id, message, type, onClick, isUndo, removeOnChangeLocation}, clearMe})

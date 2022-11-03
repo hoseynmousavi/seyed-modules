@@ -1,7 +1,9 @@
+import getMainRender from "./getMainRender"
+
 function changeBodyOverflow(makeHide)
 {
     const root = document.getElementById("root")
-    const main = document.getElementById("main-render")
+    const main = getMainRender()
     if (makeHide)
     {
         if (main) main.style.overflowY = "hidden"

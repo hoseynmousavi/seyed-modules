@@ -1,10 +1,11 @@
 import {useEffect} from "react"
+import getMainRender from "../helpers/getMainRender"
 
-function ScrollY({rootId = "main-render", condition, updateParams = []})
+function ScrollY({condition, updateParams = []})
 {
     useEffect(() =>
     {
-        const root = document.getElementById(rootId)
+        const root = getMainRender()
 
         function onScroll()
         {

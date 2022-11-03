@@ -4,7 +4,7 @@ import SwitchGesture from "../hooks/SwitchGesture"
 import parseTranslateX from "../helpers/parseTranslateX"
 import pageLoaded from "../helpers/pageLoaded"
 
-function Switch({children, isAuth, isTab, tabClassName})
+function Switch({children, isTab, tabClassName})
 {
     const [state, setState] = useState([])
     const stateRef = useRef([])
@@ -35,11 +35,11 @@ function Switch({children, isAuth, isTab, tabClassName})
             {
                 if (type === "initial")
                 {
-                    setStateFunc({type, showChildIndex: showChildIndexTemp, location: locationTemp, id: "initial"})
+                    setStateFunc({type, showChildIndex: showChildIndexTemp, location: locationTemp, id: `initial${generateId()}`})
                 }
-                else if (showChildIndex === showChildIndexTemp)
+                else if (showChildIndex === showChildIndexTemp || showChildIndexTemp === -1)
                 {
-                    setStateFunc({type: "replacestate", showChildIndex: showChildIndexTemp, location: locationTemp})
+                    setStateFunc({type: "replacestate", showChildIndex, location: locationTemp})
                 }
                 else
                 {
@@ -359,7 +359,6 @@ function Switch({children, isAuth, isTab, tabClassName})
                                location={location}
                                index={index}
                                stateLength={state.length}
-                               isAuth={isAuth}
                                isTab={isTab}
                                id={id}
                                onTouchStart={onTouchStart}

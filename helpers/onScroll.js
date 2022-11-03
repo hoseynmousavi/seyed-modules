@@ -1,6 +1,8 @@
+import getMainRender from "./getMainRender"
+
 function onScroll({callback})
 {
-    const root = document.getElementById("main-render")
+    const root = getMainRender()
 
     function onScroll()
     {

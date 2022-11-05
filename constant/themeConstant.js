@@ -1,5 +1,5 @@
 const themeConstant = {
-    defaultColor: "--first-background-color",
+    defaultColor: "--page-color",
 }
 
 export default themeConstant

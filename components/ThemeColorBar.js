@@ -19,6 +19,7 @@ function ThemeColorBar({defaultColor = themeConstant.defaultColor})
 
         window.addEventListener("changeBarColor", onChangeBarColor, {passive: true})
         return () => window.removeEventListener("changeBarColor", onChangeBarColor)
+        // eslint-disable-next-line
     }, [])
 
     return (

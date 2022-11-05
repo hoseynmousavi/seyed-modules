@@ -3,17 +3,18 @@ import themeConstant from "../constant/themeConstant"
 import getComputedStyleHelper from "../helpers/getComputedStyleHelper"
 import GetTheme from "../hooks/GetTheme"
 
-function ThemeColorBar()
+function ThemeColorBar({defaultColor = themeConstant.defaultColor})
 {
     const {isDark} = GetTheme()
-    const [barColor, setBarColor] = useState(getComputedStyleHelper(themeConstant.defaultColor))
+    const [barColor, setBarColor] = useState(getComputedStyleHelper(defaultColor))
 
     useEffect(() =>
     {
         function onChangeBarColor(event)
         {
             const {barColor} = event.detail
-            setBarColor(barColor)
+            if (barColor === "reset") setBarColor(getComputedStyleHelper(defaultColor))
+            else setBarColor(barColor)
         }
 
         window.addEventListener("changeBarColor", onChangeBarColor, {passive: true})

@@ -1,7 +1,7 @@
 import {useEffect} from "react"
 import {REQUEST_CANCEL} from "../constant/toastTypes"
 
-function GetData({request, isLoading, cancelToken, doAfterGet, dependencies = [], forceNetworkReq})
+function GetData({request, isLoading, cancelToken, doAfterGet, dependencies = []})
 {
     useEffect(() =>
     {
@@ -11,7 +11,7 @@ function GetData({request, isLoading, cancelToken, doAfterGet, dependencies = []
             request()?.then?.(() => doAfterGet && setTimeout(doAfterGet, 10))
         }
 
-        if (forceNetworkReq || isLoading) sendRequest()
+        if (isLoading) sendRequest()
         else doAfterGet?.()
 
         window.addEventListener("online", sendRequest)

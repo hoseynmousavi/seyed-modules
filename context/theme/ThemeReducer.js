@@ -10,7 +10,7 @@ import toggleTheme from "../../helpers/toggleTheme"
 
 export const ThemeContext = createContext(null)
 
-function ThemeProvider({children, changeVariables})
+function ThemeProvider({children, changeVariables, disable})
 {
     const initialState = {
         theme: "light",
@@ -50,12 +50,15 @@ function ThemeProvider({children, changeVariables})
         setCssVariables()
         if (checkOs() === "ios") document.getElementById("root").className = "ios"
         themeManager.configTheme()
-        const defaultDark = window?.matchMedia("(prefers-color-scheme: dark)")
-        const theme = cookieHelper.getItem("theme")
-        if (theme === "dark" || (!theme && defaultDark?.matches)) ThemeActions.changeTheme({theme: "dark", save: false, dispatch})
-        defaultDark.addEventListener("change", () =>
-            ThemeActions.changeTheme({theme: defaultDark?.matches ? "dark" : "light", save: true, dispatch}),
-        )
+        if (!disable)
+        {
+            const defaultDark = window?.matchMedia("(prefers-color-scheme: dark)")
+            const theme = cookieHelper.getItem("theme")
+            if (theme === "dark" || (!theme && defaultDark?.matches)) ThemeActions.changeTheme({theme: "dark", save: false, dispatch})
+            defaultDark.addEventListener("change", () =>
+                ThemeActions.changeTheme({theme: defaultDark?.matches ? "dark" : "light", save: true, dispatch}),
+            )
+        }
         // eslint-disable-next-line
     }, [])
 

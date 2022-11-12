@@ -11,8 +11,8 @@ function setCssVariables()
     {
         function setStyle()
         {
-            const clientWidth = window.innerWidth
-            const clientHeight = window.innerHeight
+            const clientWidth = window.innerWidth + 1
+            const clientHeight = window.innerHeight + 1
 
             document.documentElement.style.setProperty(
                 "--full-viewport",

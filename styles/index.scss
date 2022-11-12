@@ -44,6 +44,8 @@ body {
 
   @media screen and (min-width: 450px) {
     background-color: #000000 !important;
+    min-height: 100vh;
+
     .index-temp {
       display: inline-block;
       width: 100%;

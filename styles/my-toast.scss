@@ -1,11 +1,11 @@
 .toast-container {
   position: fixed;
-  top: var(--mobile-second-solid-padding);
-  left: var(--mobile-second-solid-padding);
-  right: var(--mobile-second-solid-padding);
-  max-height: calc(var(--full-height) - (2 * var(--mobile-second-solid-padding)));
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  max-height: calc(var(--full-height) - 32px);
   overflow: hidden;
-  width: calc(100% - (2 * var(--mobile-second-solid-padding)));
+  width: calc(100% - 32px);
   max-width: 450px;
   margin-inline-start: auto;
   z-index: var(--toast-z-index);

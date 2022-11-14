@@ -43,7 +43,7 @@ function get({base, url, param = "", dontToast, dontCache, cancel, useRefreshTok
     if (onGoingReqs[reqUrl] && !refreshed) return handleRepeat({reqUrl})
     else
     {
-        if (!refreshed) onGoingReqs[reqUrl] = {count: 1}
+        onGoingReqs[reqUrl] = {count: onGoingReqs[reqUrl]?.count || 1}
         const token = cookieHelper.getItem(useRefreshToken ? "refreshToken" : "token")
         let source
         if (cancel)

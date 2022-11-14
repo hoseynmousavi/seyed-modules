@@ -111,7 +111,7 @@ function ImageShow({className, src, alt = "", loading = "lazy", draggable = "fal
                              alt={alt}
                              onLoad={openImageLoaded}
                              draggable="false"
-                             loading="easter"
+                             loading="eager"
                         />
                     </>
                     , document.body)

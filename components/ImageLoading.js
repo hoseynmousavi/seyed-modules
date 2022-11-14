@@ -26,7 +26,7 @@ const ImageLoading = forwardRef(({className, style, src, alt, loading, onClick, 
     }
 
     return (
-        <div className={`${className} ${loadedRef.current ? "" : "image-loading"}`} style={style} ref={contRef}>
+        <div className={`image ${className} ${loadedRef.current ? "" : "image-loading"}`} style={style} ref={contRef}>
             <img decoding={loadedRef.current ? "auto" : "async"}
                  draggable={draggable}
                  className={`${className} image-loading-main ${loadedRef.current ? "loaded" : ""}`}

@@ -19,7 +19,7 @@ const ImageLoading = forwardRef(({className, style, src, alt, loading, onClick, 
         if (!loadedRef.current)
         {
             loadedRef.current = true
-            contRef.current.className = className
+            contRef.current.className = `image ${className}`
             ref.current.className = `${className} image-loading-main load-end`
             ref.current.addEventListener("click", onClick)
         }

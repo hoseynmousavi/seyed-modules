@@ -20,7 +20,7 @@ function handleRepeat({reqUrl})
 {
     return new Promise((resolve, reject) =>
     {
-        onGoingReqs[reqUrl].count++
+        onGoingReqs[reqUrl] = {count: onGoingReqs[reqUrl]?.count ?? 1}
 
         function onDataEvent(event)
         {
@@ -43,7 +43,7 @@ function get({base, url, param = "", dontToast, dontCache, cancel, useRefreshTok
     if (onGoingReqs[reqUrl] && !refreshed) return handleRepeat({reqUrl})
     else
     {
-        onGoingReqs[reqUrl] = {count: onGoingReqs[reqUrl]?.count || 1}
+        onGoingReqs[reqUrl] = {count: onGoingReqs[reqUrl]?.count ?? 1}
         const token = cookieHelper.getItem(useRefreshToken ? "refreshToken" : "token")
         let source
         if (cancel)
@@ -62,7 +62,7 @@ function get({base, url, param = "", dontToast, dontCache, cancel, useRefreshTok
             .then(res =>
             {
                 const output = res.data
-                if (onGoingReqs[reqUrl].count > 1) requestDataShareManager.dataShare({message: {status: "OK", dataReqUrl: reqUrl, data: output}})
+                if (onGoingReqs[reqUrl]?.count > 1) requestDataShareManager.dataShare({message: {status: "OK", dataReqUrl: reqUrl, data: output}})
                 delete onGoingReqs[reqUrl]
                 if (!dontCache) localStorage.setItem(reqUrl, JSON.stringify(output))
                 return output
@@ -75,7 +75,7 @@ function get({base, url, param = "", dontToast, dontCache, cancel, useRefreshTok
                     if (cacheData)
                     {
                         const output = JSON.parse(cacheData)
-                        if (onGoingReqs[reqUrl].count > 1) requestDataShareManager.dataShare({message: {status: "OK", dataReqUrl: reqUrl, data: output}})
+                        if (onGoingReqs[reqUrl]?.count > 1) requestDataShareManager.dataShare({message: {status: "OK", dataReqUrl: reqUrl, data: output}})
                         delete onGoingReqs[reqUrl]
                         return output
                     }

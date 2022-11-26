@@ -5,11 +5,11 @@ function errorConstant(error)
     const language = cookieHelper.getItem("language") || "fa"
     const isEn = language === "en"
     return (
-        error?.response?.data?.status
+        error?.response?.data?.status?.toString?.()
         ||
-        error?.response?.data?.detail
+        error?.response?.data?.detail?.toString?.()
         ||
-        error?.response?.data?.message
+        error?.response?.data?.message?.toString?.()
         ||
         {
             "Network Error": isEn ? "An Error Occurred, Please Check Your Connection." : "خطایی رخ داد، اتصال اینترنت خود را بررسی کنید.",

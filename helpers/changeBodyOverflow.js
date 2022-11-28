@@ -7,17 +7,29 @@ function changeBodyOverflow(makeHide, parent)
     const main = getMainRender()
     if (makeHide)
     {
-        if (parentEl) parentEl.style.overflowY = "hidden"
-        if (main) main.style.overflowY = "hidden"
-        if (root) root.style.overscrollBehavior = "auto"
-        document.body.style.overflowY = "hidden"
+        if (parentEl)
+        {
+            parentEl.style.overflowY = "hidden"
+        }
+        else
+        {
+            if (main) main.style.overflowY = "hidden"
+            if (root) root.style.overscrollBehavior = "auto"
+            document.body.style.overflowY = "hidden"
+        }
     }
     else
     {
-        if (parentEl) parentEl.style.removeProperty("overflow-y")
-        if (main) main.style.removeProperty("overflow-y")
-        if (root) root.style.removeProperty("overscroll-behavior")
-        document.body.style.removeProperty("overflow-y")
+        if (parentEl)
+        {
+            parentEl.style.removeProperty("overflow-y")
+        }
+        else
+        {
+            if (main) main.style.removeProperty("overflow-y")
+            if (root) root.style.removeProperty("overscroll-behavior")
+            document.body.style.removeProperty("overflow-y")
+        }
     }
 }
 

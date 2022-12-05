@@ -2,7 +2,7 @@ import getMainRender from "./getMainRender"
 
 function changeBodyOverflow(makeHide, parent)
 {
-    const parentEl = document.getElementById(parent)
+    const parentEl = parent && document.getElementById(parent)
     const root = document.getElementById("root")
     const main = getMainRender()
     if (makeHide)

@@ -1,5 +1,6 @@
 import {useRef, useState} from "react"
 import Resize from "./Resize"
+import getComputedStyleHelper from "../helpers/getComputedStyleHelper"
 
 function SlideGesture({slideNumbers, rightToLeft = true, mainSlideAnime = false, slideWidth})
 {
@@ -15,7 +16,8 @@ function SlideGesture({slideNumbers, rightToLeft = true, mainSlideAnime = false,
     let currentSlide = useRef(1)
     const [slideIndex, setSlideIndex] = useState(1)
     const {clientWidth} = Resize()
-    const windowWidth = slideWidth || Math.min(clientWidth, +process.env.REACT_APP_DESKTOP_VIEWPORT.replace("px", ""))
+    const viewport = +getComputedStyleHelper("--desktop-viewport").replace("px", "")
+    const windowWidth = slideWidth || Math.min(clientWidth, viewport)
 
     function onTouchStart(e)
     {

@@ -1,10 +1,11 @@
 import onResize from "./onResize"
 import isStandalone from "./isStandalone"
+import getComputedStyleHelper from "./getComputedStyleHelper"
 
 function setCssVariables()
 {
     let timeout = null
-    const viewport = +process.env.REACT_APP_DESKTOP_VIEWPORT.replace("px", "")
+    const viewport = +getComputedStyleHelper("--desktop-viewport").replace("px", "")
     fitVariables({isFirstTime: true})
 
     function fitVariables({isFirstTime = false})

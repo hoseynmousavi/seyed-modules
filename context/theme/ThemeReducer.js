@@ -1,6 +1,7 @@
 import {createContext, useEffect, useReducer} from "react"
 import {TOGGLE_THEME} from "./ThemeTypes"
 import ThemeActions from "./ThemeActions"
+import loadColors from "../../helpers/loadColors"
 import themeManager from "../../helpers/themeManager"
 import setCssVariables from "../../helpers/setCssVariables"
 import cookieHelper from "../../helpers/cookieHelper"
@@ -45,6 +46,7 @@ function ThemeProvider({children, changeVariables, disable})
 
     useEffect(() =>
     {
+        if (process.env.NODE_ENV === "development") loadColors()
         setCssVariables()
         if (checkOs() === "ios") document.getElementById("root").className = "ios"
         themeManager.configTheme()

@@ -22,7 +22,7 @@ function toggleTheme({theme, changeVariables = []})
             )
         })
     }
-    setTimeout(themeManager.resetBarColor, 0)
+    setTimeout(themeManager.popBarColor, 0)
 }
 
 export default toggleTheme

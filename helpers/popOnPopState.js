@@ -20,7 +20,7 @@ function popOnPopState({key = "Escape", callback, dontPush, dontChangeOverflow, 
             window.removeEventListener("popstate", onPopState)
             window.removeEventListener("pushstate", onPushState)
             if (!dontChangeOverflow) changeBodyOverflow(false)
-            if (statusBarColor) themeManager.resetBarColor()
+            if (statusBarColor) themeManager.popBarColor()
             if (key) document.removeEventListener("keydown", onKeyDown)
         }
     }
@@ -34,7 +34,7 @@ function popOnPopState({key = "Escape", callback, dontPush, dontChangeOverflow, 
     window.addEventListener("popstate", onPopState, {passive: true})
     window.addEventListener("pushstate", onPushState, {passive: true})
     if (!dontChangeOverflow) changeBodyOverflow(true)
-    if (statusBarColor) themeManager.changeBarColor({barColor: statusBarColor})
+    if (statusBarColor) themeManager.pushBarColor({barColor: statusBarColor})
     if (key) document.addEventListener("keydown", onKeyDown, {passive: true})
 }
 

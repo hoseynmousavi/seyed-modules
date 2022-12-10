@@ -6,19 +6,37 @@ import GetTheme from "../hooks/GetTheme"
 function ThemeColorBar({defaultColor = themeConstant.defaultColor})
 {
     const {isDark} = GetTheme()
-    const [barColor, setBarColor] = useState(getComputedStyleHelper(defaultColor))
+    const [barColors, setBarColors] = useState([getComputedStyleHelper(defaultColor)])
+    const barColor = barColors[barColors.length - 1]
 
     useEffect(() =>
     {
-        function onChangeBarColor(event)
+        function pushBarColor(event)
         {
             const {barColor} = event.detail
-            if (barColor === "reset") setBarColor(getComputedStyleHelper(defaultColor))
-            else setBarColor(barColor)
+            setBarColors(preBarColors => [...preBarColors, barColor])
         }
 
-        window.addEventListener("changeBarColor", onChangeBarColor, {passive: true})
-        return () => window.removeEventListener("changeBarColor", onChangeBarColor)
+        window.addEventListener("pushBarColor", pushBarColor, {passive: true})
+        return () => window.removeEventListener("pushBarColor", pushBarColor)
+        // eslint-disable-next-line
+    }, [])
+
+    useEffect(() =>
+    {
+        function popBarColor()
+        {
+            setBarColors(preBarColors =>
+            {
+                const barColors = [...preBarColors]
+                barColors.splice(barColors.length - 1, 1)
+                if (barColors.length) return barColors
+                else return [getComputedStyleHelper(defaultColor)]
+            })
+        }
+
+        window.addEventListener("popBarColor", popBarColor, {passive: true})
+        return () => window.removeEventListener("popBarColor", popBarColor)
         // eslint-disable-next-line
     }, [])
 

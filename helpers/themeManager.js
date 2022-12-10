@@ -1,29 +1,32 @@
 const configTheme = () =>
 {
-    if (!window.changeBarColor)
+    window.pushBarColor = function (props)
     {
-        window.changeBarColor = function (props)
-        {
-            const event = new CustomEvent("changeBarColor", {detail: props})
-            window.dispatchEvent(event)
-        }
+        const event = new CustomEvent("pushBarColor", {detail: props})
+        window.dispatchEvent(event)
+    }
+
+    window.popBarColor = function ()
+    {
+        const event = new CustomEvent("popBarColor")
+        window.dispatchEvent(event)
     }
 }
 
-const changeBarColor = ({barColor}) =>
+const pushBarColor = ({barColor}) =>
 {
-    window.changeBarColor({barColor})
+    window.pushBarColor({barColor})
 }
 
-const resetBarColor = () =>
+const popBarColor = () =>
 {
-    window.changeBarColor({barColor: "reset"})
+    window.popBarColor()
 }
 
 const themeManager = {
     configTheme,
-    changeBarColor,
-    resetBarColor,
+    pushBarColor,
+    popBarColor,
 }
 
 export default themeManager

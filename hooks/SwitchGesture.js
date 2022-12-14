@@ -62,8 +62,8 @@ function SwitchGesture({stateRef})
         if (changing.current)
         {
             changing.current = false
-            if (deltaX.current >= 3) restore()
-            else if (deltaX.current <= -3) back()
+            if (deltaX.current >= 6) restore()
+            else if (deltaX.current <= -6) back()
             else
             {
                 if (translatePre.current > window.innerWidth / 2) back()

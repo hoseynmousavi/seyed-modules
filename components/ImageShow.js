@@ -6,6 +6,7 @@ import onResize from "../helpers/onResize"
 import ImageLoading from "./ImageLoading"
 import ImageShowGesture from "../hooks/ImageShowGesture"
 import {dontSwitchGesture} from "../hooks/SwitchGesture"
+import getComputedStyleHelper from "../helpers/getComputedStyleHelper"
 
 function ImageShow({className, src, alt = "", loading = "lazy", draggable = "false", style = {}, zoomable, onClick})
 {
@@ -18,7 +19,7 @@ function ImageShow({className, src, alt = "", loading = "lazy", draggable = "fal
     function openImage(e)
     {
         e.stopPropagation()
-        popOnPopState({callback: closeImage})
+        popOnPopState({callback: closeImage, statusBarColor: getComputedStyleHelper("--first-background-color")})
         rect.current = imgRef.current.getBoundingClientRect()
         const {top, left, width, height} = rect.current
         setShowPicture({top, left, width, height})

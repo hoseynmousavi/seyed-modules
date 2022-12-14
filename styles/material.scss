@@ -8,7 +8,7 @@
 }
 
 .ripple {
-    position: absolute;
+    position: fixed;
     background: var(--first-material-color);
     border-radius: 50%;
     opacity: 0;
@@ -18,7 +18,7 @@
 }
 
 .ripple-slow {
-    position: absolute;
+    position: fixed;
     background: var(--first-material-color);
     border-radius: 50%;
     transform: scale(2);

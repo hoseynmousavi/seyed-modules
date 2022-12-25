@@ -5,6 +5,8 @@ function errorConstant(error)
     const language = cookieHelper.getItem("language") || "fa"
     const isEn = language === "en"
     return (
+        error?.response?.data?.error?.toString?.()
+        ||
         error?.response?.data?.status?.toString?.()
         ||
         error?.response?.data?.detail?.toString?.()

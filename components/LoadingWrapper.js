@@ -1,9 +1,9 @@
 import MyLoader from "./MyLoader"
 
-function LoadingWrapper({haveBg})
+function LoadingWrapper({className, haveBg})
 {
     return (
-        <div className={`loading-wrapper ${haveBg ? "have-bg" : ""}`}>
+        <div className={`loading-wrapper ${className} ${haveBg ? "have-bg" : ""}`}>
             <MyLoader width={40}/>
         </div>
     )

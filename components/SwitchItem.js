@@ -8,9 +8,9 @@ function SwitchItem({index, stateLength, element, location, isTab, id, onTouchSt
     const isVisible = id.includes("initial")
     return (
         <div className={`switch-cont ${isTab ? "tab" : ""}`}
-             onTouchStart={onTouchStart}
-             onTouchMove={onTouchMove}
-             onTouchEnd={onTouchEnd}
+             onTouchStart={!isTab ? onTouchStart : null}
+             onTouchMove={!isTab ? onTouchMove : null}
+             onTouchEnd={!isTab ? onTouchEnd : null}
              style={{opacity: isVisible ? "1" : "0", contentVisibility: isVisible ? "visible" : "hidden"}}
              id={id}>
             <div className={`switch ${isRendering ? "main-render" : ""}`}>

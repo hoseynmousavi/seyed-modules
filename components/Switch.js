@@ -4,7 +4,7 @@ import SwitchGesture from "../hooks/SwitchGesture"
 import parseTranslateX from "../helpers/parseTranslateX"
 import pageLoaded from "../helpers/pageLoaded"
 
-function Switch({children, isTab, tabClassName})
+function Switch({children, isTab, tabClassName, desktopAnimation})
 {
     const [state, setState] = useState([])
     const stateRef = useRef([])
@@ -43,7 +43,7 @@ function Switch({children, isTab, tabClassName})
                 }
                 else
                 {
-                    if (window.innerWidth <= 480 && !isTab)
+                    if (window.innerWidth <= 480 && !isTab && !desktopAnimation)
                     {
                         if (type === "popstate") mobileBack(showChildIndexTemp, locationTemp, type)
                         else mobileForward(showChildIndexTemp, locationTemp, type)

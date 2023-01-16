@@ -5,18 +5,24 @@ function ScrollY({condition, updateParams = [], timeout = 0})
 {
     useEffect(() =>
     {
-        setTimeout(() =>
+        let root
+
+        function onScroll()
         {
-            const root = getMainRender()
+            condition?.({scrollTop: root.scrollTop, scrollHeight: root.scrollHeight})
+        }
 
-            function onScroll()
-            {
-                condition?.({scrollTop: root.scrollTop, scrollHeight: root.scrollHeight})
-            }
-
+        const timer = setTimeout(() =>
+        {
+            root = getMainRender()
             root?.addEventListener?.("scroll", onScroll, {passive: true})
-            return () => root?.removeEventListener?.("scroll", onScroll)
         }, timeout)
+
+        return () =>
+        {
+            root?.removeEventListener?.("scroll", onScroll)
+            clearTimeout(timer)
+        }
         // eslint-disable-next-line
     }, updateParams)
 }

@@ -86,7 +86,7 @@ function get({base, url, param = "", dontToast, dontCache, cancel, useRefreshTok
     }
 }
 
-function post({base, url, data, param = "", progress, cancel, dontToast, useRefreshToken})
+function post({base, url, data, param = "", progress, cancel, dontToast, useRefreshToken, headers, dontCache = true})
 {
     const reqUrl = urlMaker({makeBaseOnEnv, base, url, param})
     const token = cookieHelper.getItem(useRefreshToken ? "refreshToken" : "token")
@@ -101,13 +101,27 @@ function post({base, url, data, param = "", progress, cancel, dontToast, useRefr
         reqUrl,
         data,
         {
-            headers: token && {[useRefreshToken ? "refresh-token" : "Authorization"]: token},
+            headers: (token || headers) && {...(token ? {[useRefreshToken ? "refresh-token" : "Authorization"]: token} : {}), ...(headers ? headers : {})},
             cancelToken: source?.token,
             onUploadProgress: p => progress && progress(Math.floor((p.loaded * 99) / p.total)),
         },
     )
-        .then(res => res.data)
-        .catch(err => error({dontToast, err, reqUrl, callback: () => post(arguments[0])}))
+        .then(res =>
+        {
+            const output = res.data
+            if (!dontCache) localStorage.setItem(reqUrl, JSON.stringify(output))
+            return output
+        })
+        .catch(err =>
+        {
+            if (err.message === "Network Error" && !dontCache)
+            {
+                const cacheData = localStorage.getItem(reqUrl)
+                if (cacheData) return JSON.parse(cacheData)
+                else return error({dontToast, err, reqUrl, callback: () => post(arguments[0])})
+            }
+            else return error({dontToast, err, reqUrl, callback: () => post(arguments[0])})
+        })
 }
 
 function put({base, url, data, param = "", progress, dontToast})

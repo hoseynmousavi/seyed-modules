@@ -29,9 +29,18 @@ function ThemeProvider({children, changeVariables, disable})
         {
             case TOGGLE_THEME:
             {
-                const {theme, save} = action.payload
-                if (save) cookieHelper.setItem("theme", theme === "dark" ? "dark" : "light")
-                toggleTheme({theme, changeVariables})
+                const {theme, save, reset} = action.payload
+                if (reset)
+                {
+                    cookieHelper.removeItem("theme")
+                    const defaultDark = window?.matchMedia("(prefers-color-scheme: dark)")
+                    toggleTheme({theme: defaultDark?.matches ? "dark" : "light", changeVariables})
+                }
+                else
+                {
+                    if (save) cookieHelper.setItem("theme", theme === "dark" ? "dark" : "light")
+                    toggleTheme({theme, changeVariables})
+                }
                 return {
                     ...state,
                     theme,

@@ -36,6 +36,12 @@ function popOnPopState({key = "Escape", callback, dontPush, dontChangeOverflow, 
     if (!dontChangeOverflow) changeBodyOverflow(true)
     if (statusBarColor) themeManager.pushBarColor({barColor: statusBarColor})
     if (key) document.addEventListener("keydown", onKeyDown, {passive: true})
+
+    return () =>
+    {
+        window.removeEventListener("popstate", onPopState)
+        window.removeEventListener("pushstate", onPushState)
+    }
 }
 
 export default popOnPopState

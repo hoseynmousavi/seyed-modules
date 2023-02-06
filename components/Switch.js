@@ -307,40 +307,27 @@ function Switch({children, isTab, tabClassName, desktopAnimation})
     {
         if (type === "initial")
         {
-            const res = [{showChildIndex, location, id}]
-            setState(res)
-            stateRef.current = res
+            stateRef.current = [{showChildIndex, location, id}]
         }
         else if (type === "replacestate")
         {
             const lastItemRef = stateRef.current[stateRef.current.length - 1]
             stateRef.current = [...stateRef.current.slice(0, stateRef.current.length - 1), {...lastItemRef, showChildIndex, location, ...(id ? {id} : {})}]
-            setState(prevState =>
-            {
-                const lastItem = prevState[prevState.length - 1]
-                return [...prevState.slice(0, prevState.length - 1), {...lastItem, showChildIndex, location, ...(id ? {id} : {})}]
-            })
         }
         else if (type === "pushstate")
         {
             stateRef.current = [...stateRef.current, {showChildIndex, location, id}]
-            setState(prevState => [...prevState, {showChildIndex, location, id}])
         }
         else if (type === "popstate")
         {
             const lastItemRef = stateRef.current[stateRef.current.length - (delta + 1)]
             stateRef.current = [...stateRef.current.slice(0, stateRef.current.length - (delta + 1)), {...lastItemRef, showChildIndex, location}]
-            setState(prevState =>
-            {
-                const lastItem = prevState[prevState.length - (delta + 1)]
-                return [...prevState.slice(0, prevState.length - (delta + 1)), {...lastItem, showChildIndex, location}]
-            })
         }
         else
         {
-            stateRef.current = [{showChildIndex, location, id}, ...(window.innerWidth <= 480 ? stateRef.current : [])]
-            setState(prevState => [{showChildIndex, location, id}, ...(window.innerWidth <= 480 ? prevState : [])])
+            stateRef.current = [{showChildIndex, location, id}, ...(window.innerWidth <= 480 && !isTab && !desktopAnimation ? stateRef.current : [])]
         }
+        setState(stateRef.current)
     }
 
     function generateId()

@@ -4,7 +4,9 @@ function Material({children, isDiv, backgroundColor, id, className, style, onCli
 {
     const container = useRef(null)
     const buttonPressTimer = useRef(null)
-    let pageX, pageY, ripple
+    const pageX = useRef(null)
+    const pageY = useRef(null)
+    const ripple = useRef(null)
 
     function appendRipple({x, y}, isSlow)
     {
@@ -19,9 +21,9 @@ function Material({children, isDiv, backgroundColor, id, className, style, onCli
             target.appendChild(tempRipple)
             tempRipple.style.top = y - rect.top - tempRipple.offsetHeight / 2 + "px"
             tempRipple.style.left = x - rect.left - tempRipple.offsetWidth / 2 + "px"
-            if (isSlow) ripple = tempRipple
-            pageX = null
-            pageY = null
+            if (isSlow) ripple.current = tempRipple
+            pageX.current = null
+            pageY.current = null
 
             if (!isSlow) setTimeout(() =>
             {
@@ -38,16 +40,16 @@ function Material({children, isDiv, backgroundColor, id, className, style, onCli
 
     function removeRipple(isLeave)
     {
-        if (ripple)
+        if (ripple.current)
         {
-            ripple.style.opacity = "0"
-            if (isLeave) ripple.style.transform = "scale(0)"
+            ripple.current.style.opacity = "0"
+            if (isLeave) ripple.current.style.transform = "scale(0)"
             setTimeout(() =>
             {
-                if (container?.current && ripple)
+                if (container.current && ripple.current)
                 {
-                    container.current.removeChild(ripple)
-                    ripple = null
+                    container.current.removeChild(ripple.current)
+                    ripple.current = null
                 }
             }, 500)
         }
@@ -63,7 +65,7 @@ function Material({children, isDiv, backgroundColor, id, className, style, onCli
         if (window.innerWidth > 480)
         {
             clearTimeout(buttonPressTimer.current)
-            if (!ripple) appendRipple({x: e.clientX, y: e.clientY}, false)
+            if (!ripple.current) appendRipple({x: e.clientX, y: e.clientY}, false)
             else removeRipple(false)
         }
     }
@@ -86,9 +88,9 @@ function Material({children, isDiv, backgroundColor, id, className, style, onCli
     {
         if (window.innerWidth <= 480)
         {
-            pageX = e.touches[0].clientX
-            pageY = e.touches[0].clientY
-            buttonPressTimer.current = setTimeout(() => appendRipple({x: pageX, y: pageY}, true), 300)
+            pageX.current = e.touches[0].clientX
+            pageY.current = e.touches[0].clientY
+            buttonPressTimer.current = setTimeout(() => appendRipple({x: pageX.current, y: pageY.current}, true), 300)
         }
     }
 
@@ -98,8 +100,8 @@ function Material({children, isDiv, backgroundColor, id, className, style, onCli
         {
             clearTimeout(buttonPressTimer.current)
             removeRipple(true)
-            pageX = null
-            pageY = null
+            pageX.current = null
+            pageY.current = null
         }
     }
 
@@ -108,7 +110,7 @@ function Material({children, isDiv, backgroundColor, id, className, style, onCli
         if (window.innerWidth <= 480)
         {
             clearTimeout(buttonPressTimer.current)
-            if (!ripple) appendRipple({x: pageX, y: pageY}, false)
+            if (!ripple.current) appendRipple({x: pageX.current, y: pageY.current}, false)
             else removeRipple(false)
         }
     }
@@ -138,6 +140,7 @@ function Material({children, isDiv, backgroundColor, id, className, style, onCli
              onTouchStart={onTouchStart}
              onTouchMove={onTouchMove}
              onTouchEnd={onTouchEnd}
+             disabled={disable}
              onClick={onClickClick}>
             {children}
         </Tag>

@@ -1,6 +1,6 @@
 import {useRef, memo} from "react"
 
-function Material({children, isDiv, backgroundColor, id, className, style, onClick, onDisableClick, disable})
+function Material({children, isDiv, backgroundColor, id, className, style, onClick, disable})
 {
     const container = useRef(null)
     const buttonPressTimer = useRef(null)
@@ -115,18 +115,6 @@ function Material({children, isDiv, backgroundColor, id, className, style, onCli
         }
     }
 
-    function onClickClick(e)
-    {
-        if (disable)
-        {
-            if (onDisableClick) onDisableClick()
-        }
-        else
-        {
-            if (onClick) onClick(e)
-        }
-    }
-
     const Tag = isDiv ? "div" : "button"
     return (
         <Tag id={id}
@@ -141,7 +129,7 @@ function Material({children, isDiv, backgroundColor, id, className, style, onCli
              onTouchMove={onTouchMove}
              onTouchEnd={onTouchEnd}
              disabled={disable}
-             onClick={onClickClick}>
+             onClick={onClick}>
             {children}
         </Tag>
     )
